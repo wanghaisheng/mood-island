@@ -1,17 +1,19 @@
-name: Run Tests and Commit
+name: Run sitemap and Commit
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  # schedule:
+    # - cron: '0 0 * * *'  # Runs daily at midnight UTC
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
   test-and-commit:
     runs-on: ubuntu-latest
+    env:
+      FAKE_HASH: "Automated deployment @ $(date '+%Y-%m-%d %H:%M:%S') Asia/Shanghai"
 
     steps:
     - name: Checkout repository
@@ -27,28 +29,12 @@ jobs:
 
     - name: Run test script
       run: node sitemap.js
-
-    - name: Check for changes
-      id: git-check
-      run: |
-        git status --porcelain
-        echo "::set-output name=modified::$(if git status --porcelain | grep .; then echo "true"; else echo "false"; fi)"
-
-    - name: Configure Git
-      if: steps.git-check.outputs.modified == 'true'
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-
-    - name: Commit changes
-      if: steps.git-check.outputs.modified == 'true'
-      run: |
-        git add .
-        git commit -m "Auto-commit: Update test results [skip ci]"
-
-    - name: Push changes
-      if: steps.git-check.outputs.modified == 'true'
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
+    -
+      name: Setup GIT user
+      uses: fregante/setup-git-user@v1
+    -
+     name: Push
+     run: |
+          git add .
+          git commit -m "${{ env.FAKE_HASH }}" 
+          git push -f
