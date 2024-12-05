@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /private/
+Allow: /
+
+Sitemap: https://mood-island.heytcm.com/sitemap.xml
