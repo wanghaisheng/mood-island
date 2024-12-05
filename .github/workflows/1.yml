@@ -18,6 +18,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+    - name: Setup GIT user
+      uses: fregante/setup-git-user@v1
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
@@ -29,9 +31,6 @@ jobs:
 
     - name: Run test script
       run: node sitemap.js
-    -
-      name: Setup GIT user
-      uses: fregante/setup-git-user@v1
     -
      name: Push
      run: |
