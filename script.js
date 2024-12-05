@@ -62,3 +62,25 @@ function changeLanguage() {
   
   document.getElementById('footer-text').innerHTML = currentLang.footerText;
 }
+
+
+// Redirect user to language-specific game page
+function redirectToLanguagePage() {
+  const lang = document.getElementById('language-selector').value;
+
+  // Define language-specific URLs
+  const languageUrls = {
+    en: "/en/game",
+    zh: "/zh/game",
+    fr: "/fr/game",
+    // Add more languages as needed
+  };
+
+  // Redirect to the corresponding page
+  if (languageUrls[lang]) {
+    window.location.href = languageUrls[lang];
+  } else {
+    console.error("Language URL not defined for selected language.");
+  }
+}
+
