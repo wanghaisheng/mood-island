@@ -3,7 +3,7 @@ const path = require('path');
 
 const locales = ['','en', 'fr', 'zh', 'es', 'de'];
 const baseDir = path.join(__dirname, '/');
-const baseUrl = 'https://heymanifestation.com';
+const baseUrl = 'https://mood-island.heytcm.com';
 
 function listHtmlFiles(dir) {
     return fs.readdirSync(dir).reduce((files, file) => {
