@@ -1,0 +1,1529 @@
+<html><head><base href="https://codepen.io" target="_blank"><meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A unique experiential game exploring happiness, relaxation, and self-discovery through interactive emotional islands. Enhance emotional intelligence and improve mental health.">
+  <meta name="keywords" content="emotional health,mental health game,emotion tracking,anxiety management,relaxation techniques,interactive therapy,emotional intelligence,mindfulness game,stress relief,mental wellness">
+  <meta name="author" content="Emotional Games Studio">
+  <title>Emotional Adventure - Interactive Emotional Health Journey</title>
+  <meta property="og:title" content="Emotional Adventure - Interactive Emotional Health Journey">
+  <meta property="og:description" content="Explore emotional islands in this unique emotional health game. Discover happiness, find peace, and learn emotion management techniques.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://emotional-adventure.com">
+  <style>
+    :root {
+      --happy-color: #FFD700;
+      --relax-color: #87CEEB;
+      --sad-color: #4682B4;
+      --anxiety-color: #483D8B;
+    }
+
+    /* New landing page styles */
+    .landing-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .landing-title {
+      font-size: 3.5em;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      margin-bottom: 30px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .landing-subtitle {
+      font-size: 1.2em;
+      color: #aaa;
+      text-align: center;
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    .start-game-btn {
+      font-size: 1.5em;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-game-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .start-game-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    .floating-emotions {
+      position: absolute;
+      font-size: 2em;
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.3;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+      to { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.6); }
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .version-tag {
+      position: absolute;
+      top: 60px; /* Changed from 20px to move it lower */
+      right: 20px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8em;
+    }
+
+    .credits {
+      position: absolute;
+      bottom: 20px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8em;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .game-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Add new styles for steps display */
+    .step-container {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .step-container.active {
+      display: block;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 10px;
+    }
+
+    .step-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .step-dot.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    .step-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Remove navigation buttons styles */
+    .navigation-buttons {
+      display: none;
+    }
+
+    .weather-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .weather-option {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      border: 2px solid transparent;
+    }
+
+    .weather-option:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      border-color: white;
+    }
+
+    .weather-option[data-island="happy"] {
+      border-color: var(--happy-color);
+    }
+
+    .weather-option[data-island="relax"] {
+      border-color: var(--relax-color);
+    }
+
+    .weather-option[data-island="sad"] {
+      border-color: var(--sad-color);
+    }
+
+    .weather-option[data-island="anxiety"] {
+      border-color: var(--anxiety-color);
+    }
+
+    .island-container {
+      display: none;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      margin-top: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .egg-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .egg {
+      width: 100px;
+      height: 120px;
+      margin: auto;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s ease;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url('https://raw.githubusercontent.com/iwenli/eggFrenzy/master/public/images/egg0.png');
+    }
+
+    .egg.opened {
+      transform: scale(0.9);
+      background-image: url('https://raw.githubusercontent.com/iwenli/eggFrenzy/master/public/images/egg4.png');
+    }
+
+    /* Remove the egg-svg styles since we won't use SVG anymore */
+    .egg-svg {
+      display: none;
+    }
+
+    .gem-collection {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .gem {
+      width: 30px;
+      height: 30px;
+      opacity: 0.3;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .gem.collected {
+      opacity: 1;
+      animation: gemCollected 0.5s ease;
+    }
+
+    @keyframes gemCollected {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      z-index: 1000;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    .modal-content {
+      color: white;
+      text-align: center;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: white;
+      font-size: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    .close-modal:hover {
+      transform: rotate(90deg);
+    }
+
+    .answer-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+
+    .answer-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    #happy-messages, #relax-tips {
+      margin-top: 20px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    #happy-messages p, #relax-tips p {
+      margin: 10px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      animation: messageAppear 0.5s ease;
+    }
+
+    @keyframes messageAppear {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reward {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .reward.falling {
+      animation: fall 1s ease-out forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, 100px);
+      }
+    }
+
+    .egg-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: goldenrod;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+    }
+
+    .celebration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .achievement {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      margin: 5px;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    .achievement.unlocked {
+      opacity: 1;
+      background: rgba(76, 175, 80, 0.2);
+      animation: achievementUnlock 0.5s ease;
+    }
+
+    @keyframes achievementUnlock {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .completion-reward {
+      text-align: center;
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      display: none;
+    }
+
+    .reward-icon {
+      font-size: 40px;
+      margin: 10px;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Add styles for the badge display area */
+    .badge-collection {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    .badge.unlocked {
+      opacity: 1;
+      background: rgba(255, 255, 255, 0.2);
+      animation: badgeUnlock 0.5s ease;
+    }
+
+    @keyframes badgeUnlock {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .badge-icon {
+      font-size: 1.2em;
+    }
+
+    .badge-name {
+      font-size: 0.9em;
+    }
+
+    /* Add new styles for happy island */
+    #happy-island {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .checkin-wall {
+      background: linear-gradient(45deg, #FFE5D9, #FFF1E6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      min-height: 300px;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .checkin-wall::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.1),
+        rgba(255,255,255,0.1) 10px,
+        rgba(255,255,255,0.2) 10px,
+        rgba(255,255,255,0.2) 20px
+      );
+    }
+
+    .checkin-title {
+      color: #FF6B6B;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #checkin-btn {
+      background: linear-gradient(45deg, #4CAF50, #45B649);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    #checkin-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    .checkin-entry {
+      background: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      margin: 10px;
+      display: inline-block;
+      color: #333;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      animation: entryAppear 0.5s ease-out;
+    }
+
+    @keyframes entryAppear {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .share-message {
+      color: white;
+      font-size: 18px;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      display: none;
+    }
+
+    /* Add these new animation styles to the existing CSS */
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      transition: opacity 1s ease;
+    }
+
+    .intro-title {
+      font-size: 32px;
+      color: #fff;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 1s ease forwards;
+    }
+
+    .intro-text {
+      font-size: 18px;
+      color: #fff;
+      max-width: 800px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 1s ease forwards 0.5s;
+    }
+
+    .emotion-compass {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      margin: 40px auto;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.5s;
+    }
+
+    .compass-circle {
+      width: 100%;
+      height: 100%;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      position: absolute;
+      animation: rotate 10s linear infinite;
+    }
+
+    .emotion-symbol {
+      position: absolute;
+      font-size: 24px;
+      transform-origin: center;
+    }
+
+    .start-journey {
+      margin-top: 30px;
+      padding: 15px 30px;
+      font-size: 18px;
+      background: linear-gradient(45deg, #4CAF50, #45B649);
+      border: none;
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 1s ease forwards 2s;
+      transition: all 0.3s ease;
+    }
+
+    .start-journey:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+    }
+
+    .piggy-bank {
+      cursor: pointer;
+      margin: 20px auto;
+      width: 150px;
+      transition: transform 0.3s ease;
+    }
+
+    .piggy-bank:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+    }
+
+    .feature-title {
+      font-size: 1.2em;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .feature-description {
+      color: #aaa;
+      font-size: 0.9em;
+      line-height: 1.6;
+    }
+
+    .testimonials {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .rating {
+      color: #FFD700;
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    .scroll-down {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      font-size: 1.2em;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 25px;
+      backdrop-filter: blur(5px);
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    .scroll-down:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* Update bounce animation */
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+
+    /* New styles for testimonials, benefits, how it works and FAQ sections */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .benefits-section {
+      padding: 60px 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 40px auto;
+    }
+
+    .benefit-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .section-title {
+      font-size: 2.5em;
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .how-it-works {
+      padding: 60px 20px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .step-number {
+      font-size: 2em;
+      color: var(--happy-color);
+      font-weight: bold;
+    }
+
+    .faq-section {
+      padding: 60px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .faq-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .faq-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .faq-question {
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 10px;
+      position: relative;
+      padding-right: 30px;
+    }
+
+    .faq-question::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question::after {
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .faq-answer {
+      color: #aaa;
+      display: none;
+      line-height: 1.6;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .faq-item.active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Add new styles for the future features section */
+    .future-features {
+      padding: 60px 20px;
+      background: rgba(255, 255, 255, 0.02);
+      margin-top: 40px;
+    }
+
+    .feature-group {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 60px;
+      padding: 20px;
+    }
+
+    .feature-group h3 {
+      color: #FFD700;  /* Change to golden color */
+      font-size: 1.8em;
+      margin: 20px 0;
+      text-align: left;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .feature-group h3::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 4px;
+      height: 80%;
+      background: #FFD700;
+      transform: translateY(-50%);
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 20px 0;
+    }
+
+    .feature-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-icon-large {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover .feature-icon-large {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-title {
+      color: #fff;
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .feature-description {
+      color: #aaa;
+      font-size: 0.95em;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    /* Add responsive adjustments */
+    @media (max-width: 768px) {
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .feature-group h3 {
+        font-size: 1.5em;
+        margin: 15px 0;
+      }
+      
+      .feature-item {
+        padding: 20px;
+      }
+    }
+  </style></head><body>
+<div class="language-selector">
+  <select id="languageSelect">
+    <option value="en">English</option>
+    <option value="zh">中文</option>
+    <option value="es" selected="">Español</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+  </select>
+</div>
+<div class="landing-page" id="landing-page">
+  <div class="version-tag">Versión 1.0.0</div>
+  
+  <h1 class="landing-title">Viaje de Aventura Emocional</h1>
+  <p class="landing-subtitle">
+    Embárcate en un viaje único explorando tu mundo interior a través de islas emocionales interactivas, descubriendo la felicidad, la paz y el autoconocimiento.
+  </p>
+  
+  <button class="start-game-btn" id="start-game-btn" href="/game">
+    Iniciar Aventura
+  </button>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🏝️</div>
+      <h3 class="feature-title">4 Islas Únicas</h3>
+      <p class="feature-description">Explora las islas de la alegría, la relajación, la tristeza y la ansiedad, cada una ofreciendo desafíos y experiencias de sanación únicos.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3 class="feature-title">Desafíos Interactivos</h3>
+      <p class="feature-description">Participa en actividades significativas diseñadas por profesionales de la salud mental para mejorar el bienestar emocional.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">🏆</div>
+      <h3 class="feature-title">Sistema de Logros</h3>
+      <p class="feature-description">Gana insignias y sigue tu progreso mientras desarrollas habilidades de gestión emocional.</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">💗</div>
+      <h3 class="feature-title">Crecimiento del Poder del Corazón</h3>
+      <p class="feature-description">Extrae fuerza vital del cielo, la tierra y las personas para elevar tu poder del corazón.</p>
+    </div>
+  </div>
+
+  <div class="benefits-section">
+    <h2 class="section-title">¿Por qué elegir Aventura Emocional?</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🧠</div>
+        <h3>Enfoque Científico</h3>
+        <p>Basado en técnicas psicológicas probadas y principios de inteligencia emocional.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🎮</div>
+        <h3>Experiencia Gamificada</h3>
+        <p>Transforma el crecimiento emocional en una aventura divertida llena de recompensas y logros.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📈</div>
+        <h3>Seguimiento de Progreso</h3>
+        <p>Visualiza tu viaje de crecimiento emocional a través de un seguimiento detallado.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🤝</div>
+        <h3>Comunidad de Apoyo</h3>
+        <p>Conéctate con otros y comparte experiencias similares de salud emocional.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <h2 class="section-title">Cómo Funciona</h2>
+    <div class="steps-container">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Revisa tu Clima Emocional</h3>
+          <p>Comienza identificando tu estado emocional actual a través de nuestro sistema intuitivo del clima.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Elige tu Isla</h3>
+          <p>Visita la isla que coincida con tus necesidades emocionales, ya sea que necesites alegría, relajación o apoyo.</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Completa Desafíos</h3>
+          <p>Participa en actividades terapéuticas diseñadas para mejorar tu salud emocional.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <h2 class="section-title">Preguntas Frecuentes</h2>
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-question">¿Qué es el Viaje de Aventura Emocional?</div>
+        <div class="faq-answer">Es una plataforma interactiva de salud emocional que ayuda a los usuarios a explorar, comprender y gestionar sus emociones a través de cuatro islas emocionales únicas.</div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Para quién es esta plataforma?</div>
+        <div class="faq-answer">Para cualquier persona que busque mejorar sus habilidades de gestión emocional, incluyendo aquellos que buscan entender mejor sus emociones, manejar el estrés o la ansiedad.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">¿Cómo empiezo mi viaje de exploración emocional?</div>
+        <div class="faq-answer">Comenzar es fácil:
+          1. Haz clic en el botón "Iniciar Aventura"
+          2. Selecciona tu estado emocional actual (Soleado, Nublado, Lluvioso o Tormentoso)
+          3. Entra en la isla emocional correspondiente
+          4. Participa en actividades interactivas y recolecta insignias y gemas
+          Cada visita es una experiencia de exploración emocional única.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">¿Necesito conocimientos psicológicos profesionales para usar esta plataforma?</div>
+        <div class="faq-answer">No. Nuestra plataforma está diseñada para ser simple e intuitiva, adecuada para todos los usuarios. Cada actividad está acompañada de directrices claras para ayudarte a participar fácilmente. Si bien la plataforma incorpora principios psicológicos, los presenta de manera comprensible y práctica.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">¿Cómo rastreo mi progreso de crecimiento emocional?</div>
+        <div class="faq-answer">La plataforma ofrece varias formas de rastrear tu progreso:
+          • El sistema de insignias emocionales registra tus logros
+          • Barras de progreso para cada isla
+          • Las gemas recolectadas muestran los niveles de participación en las actividades
+          • El muro de registro de estado de ánimo de la Isla de la Alegría
+          Todo esto ayuda a visualizar tu viaje de crecimiento emocional.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">¿Se actualizará regularmente el contenido de la plataforma?</div>
+        <div class="faq-answer">Sí. Actualizamos y optimizamos regularmente el contenido de la plataforma:
+          • Añadir nuevas actividades interactivas
+          • Introducir temas estacionales
+          • Mejorar características existentes basadas en la retroalimentación de los usuarios
+          • Aumentar nuevas herramientas de gestión emocional
+          Estamos comprometidos a proporcionar a los usuarios una experiencia de exploración emocional rica y diversa.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">¿Cómo protegen mi privacidad?</div>
+        <div class="faq-answer">Tomamos muy en serio la privacidad del usuario:
+          • Todos los datos personales están encriptados
+          • Los registros emocionales son solo para visualización personal
+          • No compartimos tu información con terceros
+          • Puedes eliminar tus datos en cualquier momento
+          Estamos comprometidos a proporcionar a los usuarios un entorno seguro de exploración emocional.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonials">
+    <h2 style="color: #fff; margin-bottom: 30px;">Lo que Dicen Nuestros Usuarios</h2>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>"Esta plataforma me ayudó a entender y gestionar mejor mis emociones. ¡Las islas interactivas son divertidas y terapéuticas!"</p>
+        <small style="color: #aaa;">- María S.</small>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>"Una manera hermosa y atractiva de practicar la atención plena y la salud emocional. ¡Altamente recomendado!"</p>
+        <small style="color: #aaa;">- Carlos R.</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="future-features">
+    <h2 class="section-title">Características Futuras</h2>
+    
+    <div class="feature-group">
+      <div>
+        <h3>Características Clave</h3>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon-large">📊</div>
+            <h4 class="feature-title">Seguimiento Emocional</h4>
+            <p class="feature-description">Registra tus sentimientos, razones y explora patrones emocionales a lo largo del tiempo. Obtén información más profunda sobre tus cambios emocionales a través de la visualización de datos.</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">📈</div>
+            <h4 class="feature-title">Revisiones Semanales y Mensuales</h4>
+            <p class="feature-description">Analiza tendencias emocionales, incluyendo los mejores y peores períodos emocionales, emociones promedio y rangos de fluctuación emocional. Recibe sugerencias de mejora personalizadas.</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">🧘</div>
+            <h4 class="feature-title">Registro de Actividades</h4>
+            <p class="feature-description">Rastrea actividades como meditación, carrera y flexiones para establecer conexiones entre emociones y actividades, descubriendo hábitos que impactan positivamente tus sentimientos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Experiencia Personalizada</h3>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon-large">🎯</div>
+            <h4 class="feature-title">Sugerencias Inteligentes</h4>
+            <p class="feature-description">Proporciona sugerencias de mejora personalizadas y recomendaciones de actividades basadas en tus datos emocionales y registros de actividades.</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">⏰</div>
+            <h4 class="feature-title">Recordatorios Personalizados</h4>
+            <p class="feature-description">Establece recordatorios personalizados de registro emocional para asegurar un seguimiento continuo. Recibe correos electrónicos semanales de informes emocionales para entender tu progreso.</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">🎨</div>
+            <h4 class="feature-title">Personalización de Temas</h4>
+            <p class="feature-description">Elige tus temas de interfaz y combinaciones de colores favoritos para crear un espacio de exploración emocional personalizado.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Características Sociales</h3>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon-large">👥</div>
+            <h4 class="feature-title">Círculo de Apoyo Emocional</h4>
+            <p class="feature-description">Establece tu red de apoyo emocional y crece junto a compañeros afines. Puedes elegir compartir tu viaje emocional e ideas.</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">🤝</div>
+            <h4 class="feature-title">Ayuda Mutua Anónima</h4>
+            <p class="feature-description">Participa en programas de ayuda emocional mutua anónima mientras proteges la privacidad para dar y recibir apoyo emocional.</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">🎁</div>
+            <h4 class="feature-title">Compartir Logros</h4>
+            <p class="feature-description">Comparte los logros e ideas obtenidos durante tu viaje de exploración emocional en un formato hermoso con aquellos que se preocupan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="credits">Creado por HeyTCM ❤️</div>
+  
+  
+</div>
+
+<div class="game-container" style="display: none;">
+  <button class="back-button" id="backBtn">Atrás</button>
+  
+  <div class="step-indicator">
+    <div class="step-dot active" data-step="1"></div>
+    <div class="step-dot" data-step="2"></div>
+    <div class="step-dot" data-step="3"></div>
+  </div>
+
+  <!-- Step 1: Weather Selection -->
+  <div class="step-container active" id="step1">
+    <h2 class="step-title">Elige el Clima Emocional de Hoy</h2>
+    <div class="weather-selector">
+      <div class="weather-option" data-island="happy">
+        <h2>Soleado 🌞</h2>
+        <p>Te sientes feliz, dirígete a la Isla de la Alegría</p>
+      </div>
+      <div class="weather-option" data-island="relax">
+        <h2>Nublado ⛅</h2>
+        <p>Necesitas relajación, dirígete a la Isla de la Relajación</p>
+      </div>
+      <div class="weather-option" data-island="sad">
+        <h2>Lluvioso 🌧️</h2>
+        <p>Te sientes triste, dirígete a la Isla de la Tristeza</p>
+      </div>
+      <div class="weather-option" data-island="anxiety">
+        <h2>Tormentoso 🌪️</h2>
+        <p>Te sientes ansioso, dirígete a la Isla de la Ansiedad</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Island Introduction -->
+  <div class="step-container" id="step2">
+    <h2 class="step-title">Bienvenido a <span class="island-name"></span></h2>
+    <div class="island-intro">
+      <!-- Dynamic content will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Step 3: Island Activities -->
+  <div class="step-container" id="step3">
+    <h2 class="step-title">Exploración en <span class="island-name"></span></h2>
+    <div class="island-content"></div>
+  </div>
+</div>
+
+<div class="modal" id="question-modal">
+  <span class="close-modal">×</span>
+  <div class="modal-content">
+    <h3 id="question-text"></h3>
+    <button class="answer-btn" data-answer="A"></button>
+    <button class="answer-btn" data-answer="B"></button>
+  </div>
+</div>
+
+<script>
+const translations = {
+  es: {
+    landingPage: {
+      title: "Viaje de Aventura Emocional",
+      subtitle: "Embárcate en un viaje único explorando tu mundo interior a través de islas emocionales interactivas, descubriendo la felicidad, la paz y el autoconocimiento.",
+      startButton: "Iniciar Aventura",
+      scrollDown: "Desplázate para más información ↓",
+      version: "Versión 1.0.0",
+      credits: "Creado por Emotional Games Studio ❤️"
+    },
+    sections: {
+      benefits: {
+        title: "¿Por qué elegir Aventura Emocional?",
+        cards: [
+          {
+            title: "Enfoque Científico",
+            description: "Basado en técnicas psicológicas probadas y principios de inteligencia emocional."
+          },
+          {
+            title: "Experiencia Gamificada",
+            description: "Transforma el crecimiento emocional en una aventura divertida llena de recompensas y logros."
+          },
+          {
+            title: "Seguimiento de Progreso",
+            description: "Visualiza tu viaje de crecimiento emocional a través de un seguimiento detallado."
+          },
+          {
+            title: "Comunidad de Apoyo",
+            description: "Conéctate con otros y comparte experiencias similares de salud emocional."
+          }
+        ]
+      },
+      howItWorks: {
+        title: "Cómo Funciona",
+        steps: [
+          {
+            number: "1",
+            title: "Revisa tu Clima Emocional",
+            description: "Comienza identificando tu estado emocional actual a través de nuestro sistema intuitivo del clima."
+          },
+          {
+            number: "2",
+            title: "Elige tu Isla",
+            description: "Visita la isla que coincida con tus necesidades emocionales, ya sea que necesites alegría, relajación o apoyo."
+          },
+          {
+            number: "3",
+            title: "Completa Desafíos",
+            description: "Participa en actividades terapéuticas diseñadas para mejorar tu salud emocional."
+          }
+        ]
+      },
+      faq: {
+        title: "Preguntas Frecuentes",
+        questions: [
+          {
+            question: "¿Qué es el Viaje de Aventura Emocional?",
+            answer: "Es una plataforma interactiva de salud emocional que ayuda a los usuarios a explorar, comprender y gestionar sus emociones a través de cuatro islas emocionales únicas."
+          },
+          {
+            question: "¿Para quién es esta plataforma?",
+            answer: "Para cualquier persona que busque mejorar sus habilidades de gestión emocional, incluyendo aquellos que buscan entender mejor sus emociones, manejar el estrés o la ansiedad."
+          }
+        ]
+      },
+      testimonials: {
+        title: "Lo que Dicen Nuestros Usuarios",
+        reviews: [
+          {
+            text: "Esta plataforma me ayudó a entender y gestionar mejor mis emociones. ¡Las islas interactivas son divertidas y terapéuticas!",
+            author: "- María S."
+          },
+          {
+            text: "Una manera hermosa y atractiva de practicar la atención plena y la salud emocional. ¡Altamente recomendado!",
+            author: "- Carlos R."
+          }
+        ]
+      }
+    }
+  }
+};
+
+// Update the page content
+function updateSpanishContent() {
+  // Update main elements
+  document.querySelector('.landing-title').textContent = translations.es.landingPage.title;
+  document.querySelector('.landing-subtitle').textContent = translations.es.landingPage.subtitle;
+  document.querySelector('.start-game-btn').textContent = translations.es.landingPage.startButton;
+  document.querySelector('.scroll-down').textContent = translations.es.landingPage.scrollDown;
+  document.querySelector('.version-tag').textContent = translations.es.landingPage.version;
+  document.querySelector('.credits').textContent = translations.es.landingPage.credits;
+
+  // Update section titles
+  document.querySelector('.benefits-section .section-title').textContent = translations.es.sections.benefits.title;
+  document.querySelector('.how-it-works .section-title').textContent = translations.es.sections.howItWorks.title;
+  document.querySelector('.faq-section .section-title').textContent = translations.es.sections.faq.title;
+  document.querySelector('.testimonials h2').textContent = translations.es.sections.testimonials.title;
+
+  // Update benefits section cards
+  const benefitCards = document.querySelectorAll('.benefit-card');
+  translations.es.sections.benefits.cards.forEach((card, index) => {
+    benefitCards[index].querySelector('h3').textContent = card.title;
+    benefitCards[index].querySelector('p').textContent = card.description;
+  });
+
+  // Update how it works steps
+  const steps = document.querySelectorAll('.step-card');
+  translations.es.sections.howItWorks.steps.forEach((step, index) => {
+    steps[index].querySelector('h3').textContent = step.title;
+    steps[index].querySelector('p').textContent = step.description;
+  });
+
+  // Update FAQ section content
+  const faqItems = document.querySelectorAll('.faq-item');
+  translations.es.sections.faq.questions.forEach((item, index) => {
+    faqItems[index].querySelector('.faq-question').textContent = item.question;
+    faqItems[index].querySelector('.faq-answer').textContent = item.answer;
+  });
+
+  // Update testimonials
+  const testimonials = document.querySelectorAll('.testimonial-card');
+  translations.es.sections.testimonials.reviews.forEach((review, index) => {
+    testimonials[index].querySelector('p').textContent = review.text;
+    testimonials[index].querySelector('small').textContent = review.author;
+  });
+}
+
+// Add event listener for language selection
+document.getElementById('languageSelect').addEventListener('change', (e) => {
+  if (e.target.value === 'es') {
+    updateSpanishContent();
+  }
+});
+</script></body></html>
