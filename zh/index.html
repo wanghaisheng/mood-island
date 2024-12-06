@@ -1,1 +1,2309 @@
 
+<html><head><base href="/" target="_blank"><meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="通过互动情绪岛屿探索快乐、放松和自我发现的独特体验游戏。提升情绪智慧，改善心理健康。">
+  <meta name="keywords" content="情绪健康,心理健康游戏,情绪跟踪,焦虑管理,放松技巧,互动治疗,情商,正念游戏,减压,心理健康">
+  <meta name="author" content="Emotional Games Studio">
+  <title>情绪岛探险 - 互动式情绪健康之旅</title>
+  <meta property="og:title" content="情绪探险 - 互动式情绪健康之旅">
+  <meta property="og:description" content="在这款独特的情绪健康游戏中探索情绪岛屿。发现快乐，寻找平静，学习情绪管理技巧。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://emotional-adventure.com">
+  <style>
+    :root {
+      --happy-color: #FFD700;
+      --relax-color: #87CEEB;
+      --sad-color: #4682B4;
+      --anxiety-color: #483D8B;
+    }
+
+    /* New landing page styles */
+    .landing-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .landing-title {
+      font-size: 3.5em;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      margin-bottom: 30px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .landing-subtitle {
+      font-size: 1.2em;
+      color: #aaa;
+      text-align: center;
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    .start-game-btn {
+      font-size: 1.5em;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-game-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .start-game-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    .floating-emotions {
+      position: absolute;
+      font-size: 2em;
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.3;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+      to { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.6); }
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .version-tag {
+      position: absolute;
+      top: 60px; /* Changed from 20px to move it lower */
+      right: 20px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8em;
+    }
+
+    .credits {
+      position: absolute;
+      bottom: 20px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8em;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: white;
+      min-height: 100vh;
+    }
+
+    .game-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Add new styles for steps display */
+    .step-container {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .step-container.active {
+      display: block;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 10px;
+    }
+
+    .step-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .step-dot.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    .step-title {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Remove navigation buttons styles */
+    .navigation-buttons {
+      display: none;
+    }
+
+    .weather-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .weather-option {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      border: 2px solid transparent;
+    }
+
+    .weather-option:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      border-color: white;
+    }
+
+    .weather-option[data-island="happy"] {
+      border-color: var(--happy-color);
+    }
+
+    .weather-option[data-island="relax"] {
+      border-color: var(--relax-color);
+    }
+
+    .weather-option[data-island="sad"] {
+      border-color: var(--sad-color);
+    }
+
+    .weather-option[data-island="anxiety"] {
+      border-color: var(--anxiety-color);
+    }
+
+    .island-container {
+      display: none;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      margin-top: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .egg-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .egg {
+      width: 100px;
+      height: 120px;
+      margin: auto;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.3s ease;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url('https://raw.githubusercontent.com/iwenli/eggFrenzy/master/public/images/egg0.png');
+    }
+
+    .egg.opened {
+      transform: scale(0.9);
+      background-image: url('https://raw.githubusercontent.com/iwenli/eggFrenzy/master/public/images/egg4.png');
+    }
+
+    /* Remove the egg-svg styles since we won't use SVG anymore */
+    .egg-svg {
+      display: none;
+    }
+
+    .gem-collection {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .gem {
+      width: 30px;
+      height: 30px;
+      opacity: 0.3;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .gem.collected {
+      opacity: 1;
+      animation: gemCollected 0.5s ease;
+    }
+
+    @keyframes gemCollected {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      z-index: 1000;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    .modal-content {
+      color: white;
+      text-align: center;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: white;
+      font-size: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    .close-modal:hover {
+      transform: rotate(90deg);
+    }
+
+    .answer-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+
+    .answer-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    #happy-messages, #relax-tips {
+      margin-top: 20px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    #happy-messages p, #relax-tips p {
+      margin: 10px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      animation: messageAppear 0.5s ease;
+    }
+
+    @keyframes messageAppear {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reward {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .reward.falling {
+      animation: fall 1s ease-out forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, 100px);
+      }
+    }
+
+    .egg-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: goldenrod;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+    }
+
+    .celebration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .achievement {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      margin: 5px;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    .achievement.unlocked {
+      opacity: 1;
+      background: rgba(76, 175, 80, 0.2);
+      animation: achievementUnlock 0.5s ease;
+    }
+
+    @keyframes achievementUnlock {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .completion-reward {
+      text-align: center;
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      display: none;
+    }
+
+    .reward-icon {
+      font-size: 40px;
+      margin: 10px;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Add styles for the badge display area */
+    .badge-collection {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    .badge.unlocked {
+      opacity: 1;
+      background: rgba(255, 255, 255, 0.2);
+      animation: badgeUnlock 0.5s ease;
+    }
+
+    @keyframes badgeUnlock {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .badge-icon {
+      font-size: 1.2em;
+    }
+
+    .badge-name {
+      font-size: 0.9em;
+    }
+
+    /* Add new styles for happy island */
+    #happy-island {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .checkin-wall {
+      background: linear-gradient(45deg, #FFE5D9, #FFF1E6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      min-height: 300px;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .checkin-wall::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.1),
+        rgba(255,255,255,0.1) 10px,
+        rgba(255,255,255,0.2) 10px,
+        rgba(255,255,255,0.2) 20px
+      );
+    }
+
+    .checkin-title {
+      color: #FF6B6B;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #checkin-btn {
+      background: linear-gradient(45deg, #4CAF50, #45B649);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    #checkin-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+
+    .checkin-entry {
+      background: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      margin: 10px;
+      display: inline-block;
+      color: #333;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      animation: entryAppear 0.5s ease-out;
+    }
+
+    @keyframes entryAppear {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .share-message {
+      color: white;
+      font-size: 18px;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      display: none;
+    }
+
+    /* Add these new animation styles to the existing CSS */
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      transition: opacity 1s ease;
+    }
+
+    .intro-title {
+      font-size: 32px;
+      color: #fff;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 1s ease forwards;
+    }
+
+    .intro-text {
+      font-size: 18px;
+      color: #fff;
+      max-width: 800px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 1s ease forwards 0.5s;
+    }
+
+    .emotion-compass {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      margin: 40px auto;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.5s;
+    }
+
+    .compass-circle {
+      width: 100%;
+      height: 100%;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      position: absolute;
+      animation: rotate 10s linear infinite;
+    }
+
+    .emotion-symbol {
+      position: absolute;
+      font-size: 24px;
+      transform-origin: center;
+    }
+
+    .start-journey {
+      margin-top: 30px;
+      padding: 15px 30px;
+      font-size: 18px;
+      background: linear-gradient(45deg, #4CAF50, #45B649);
+      border: none;
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 1s ease forwards 2s;
+      transition: all 0.3s ease;
+    }
+
+    .start-journey:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+    }
+
+    .piggy-bank {
+      cursor: pointer;
+      margin: 20px auto;
+      width: 150px;
+      transition: transform 0.3s ease;
+    }
+
+    .piggy-bank:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+    }
+
+    .feature-title {
+      font-size: 1.2em;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .feature-description {
+      color: #aaa;
+      font-size: 0.9em;
+      line-height: 1.6;
+    }
+
+    .testimonials {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .rating {
+      color: #FFD700;
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    .scroll-down {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      font-size: 1.2em;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 25px;
+      backdrop-filter: blur(5px);
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    .scroll-down:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* Update bounce animation */
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+
+    /* New styles for testimonials, benefits, how it works and FAQ sections */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .benefits-section {
+      padding: 60px 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 40px auto;
+    }
+
+    .benefit-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .section-title {
+      font-size: 2.5em;
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .how-it-works {
+      padding: 60px 20px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .step-number {
+      font-size: 2em;
+      color: var(--happy-color);
+      font-weight: bold;
+    }
+
+    .faq-section {
+      padding: 60px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .faq-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .faq-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .faq-question {
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 10px;
+      position: relative;
+      padding-right: 30px;
+    }
+
+    .faq-question::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question::after {
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .faq-answer {
+      color: #aaa;
+      display: none;
+      line-height: 1.6;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .faq-item.active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Add new styles for the future features section */
+    .future-features {
+      padding: 60px 20px;
+      background: rgba(255, 255, 255, 0.02);
+      margin-top: 40px;
+    }
+
+    .feature-group {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 60px;
+      padding: 20px;
+    }
+
+    .feature-group h3 {
+      color: #FFD700;  /* Change to golden color */
+      font-size: 1.8em;
+      margin: 20px 0;
+      text-align: left;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .feature-group h3::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 4px;
+      height: 80%;
+      background: #FFD700;
+      transform: translateY(-50%);
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 20px 0;
+    }
+
+    .feature-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-icon-large {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover .feature-icon-large {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-title {
+      color: #fff;
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .feature-description {
+      color: #aaa;
+      font-size: 0.95em;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    /* Add responsive adjustments */
+    @media (max-width: 768px) {
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .feature-group h3 {
+        font-size: 1.5em;
+        margin: 15px 0;
+      }
+      
+      .feature-item {
+        padding: 20px;
+      }
+    }
+  </style></head><body>
+<div class="language-selector">
+  <select id="languageSelect">
+    <option value="en">English</option>
+    <option value="zh" selected>中文</option>
+    <option value="es">Español</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+  </select>
+</div>
+<div class="landing-page" id="landing-page">
+  <div class="version-tag">版本 1.0.0</div>
+  
+  <h1 class="landing-title">情绪探险之旅</h1>
+  <p class="landing-subtitle">
+    踏上一段通过互动情绪岛屿探索内心世界的独特旅程，通过快乐、平静和自我发现开启您的情绪健康之旅。
+  </p>
+  
+  <button class="start-game-btn" id="start-game-btn" href="/game">
+    开始探险
+  </button>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🏝️</div>
+      <h3 class="feature-title">4 个独特的岛屿</h3>
+      <p class="feature-description">探索快乐、放松、悲伤和焦虑的岛屿，每个岛屿提供独特的挑战和治愈体验。</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3 class="feature-title">互动挑战</h3>
+      <p class="feature-description">参与心理健康专业人士设计的有意义活动，以改善情绪健康。</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">🏆</div>
+      <h3 class="feature-title">成就系统</h3>
+      <p class="feature-description">获得徽章并跟踪您的进步，培养情绪管理技能。</p>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">💗</div>
+      <h3 class="feature-title">心力增长</h3>
+      <p class="feature-description">从天、地、人汲取生命本源力量，提振自己的心力</p>
+    </div>
+  </div>
+
+  <div class="benefits-section">
+    <h2 class="section-title">为什么选择情绪探险？</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🧠</div>
+        <h3>基于科学的方法</h3>
+        <p>基于经过验证的心理学技术和情绪智力原则</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🎮</div>
+        <h3>游戏化体验</h3>
+        <p>将情绪成长转化为充满乐趣的冒险，享受奖励和成就</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📈</div>
+        <h3>跟踪您的进步</h3>
+        <p>通过详细的进度追踪可视化您的情绪成长旅程</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🤝</div>
+        <h3>支持性社区</h3>
+        <p>与他人建立联系，分享类似的情绪健康旅程</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <h2 class="section-title">如何运作</h2>
+    <div class="steps-container">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>检查您的情绪天气</h3>
+          <p>通过我们直观的天气系统开始识别您当前的情绪状态</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>选择您的岛屿</h3>
+          <p>访问与您的情绪需求相匹配的岛屿 - 无论您需要快乐、放松还是支持</p>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>完成挑战</h3>
+          <p>参与旨在改善您情绪健康的治疗活动</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <h2 class="section-title">常见问题</h2>
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-question">什么是情绪探险之旅？</div>
+        <div class="faq-answer">情绪探险之旅是一个互动式情绪健康游戏平台，通过四个独特的情绪岛屿（快乐岛、放松岛、忧伤岛和焦虑岛），帮助用户探索、理解和管理自己的情绪。每个岛屿都提供特定的活动和工具来培养情绪智慧。</div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">情绪探险之旅适合哪些人？</div>
+        <div class="faq-answer">该平台适合所有希望提升情绪管理能力的人，包括：
+          • 想要更好地了解自己情绪的人
+          • 正在经历压力或焦虑的人
+          • 寻求情绪支持工具的人
+          • 对个人成长感兴趣的人
+          • 想要培养积极心态的人</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">如何开始我的情绪探索之旅？</div>
+        <div class="faq-answer">开始很简单：
+          1. 点击"开始探险"按钮
+          2. 选择当前的情绪状态（晴朗、多云、阴天或风暴）
+          3. 进入相应的情绪岛屿
+          4. 参与互动活动，收集徽章和宝石
+          每次访问都是一次独特的情绪探索体验。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">使用这个平台是否需要专业的心理学知识？</div>
+        <div class="faq-answer">不需要。我们的平台设计简单直观，适合所有用户。每个活动都配有清晰的指导说明，让您能轻松参与其中。虽然平台融入了心理学原理，但以易于理解和实践的方式呈现。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">如何追踪我的情绪成长进度？</div>
+        <div class="faq-answer">平台提供多种进度追踪方式：
+          • 情绪徽章系统记录您的成就
+          • 每个岛屿的完成进度条
+          • 收集的宝石显示活动参与度
+          • 快乐岛的心情记录墙
+          这些都帮助您可视化自己的情绪成长历程。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">平台的内容会定期更新吗？</div>
+        <div class="faq-answer">是的。我们定期更新和优化平台内容：
+          • 添加新的互动活动
+          • 引入季节性主题
+          • 根据用户反馈改进现有功能
+          • 增加新的情绪管理工具
+          我们致力于为用户提供丰富多样的情绪探索体验。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">如何保护我的隐私？</div>
+        <div class="faq-answer">我们高度重视用户隐私：
+          • 所有个人数据都经过加密处理
+          • 情绪记录仅供个人查看
+          • 不会与第三方分享您的信息
+          • 您可以随时删除自己的数据
+          我们承诺为用户提供安全的情绪探索环境。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonials">
+    <h2 style="color: #fff; margin-bottom: 30px;">我们的用户怎么说</h2>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>"这个游戏帮助我更好地理解和管理我的情绪。互动岛屿既有趣又具有治疗效果！"</p>
+        <small style="color: #aaa;">- Sarah M.</small>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>"一种美丽而引人入胜的方式来练习正念和情绪健康。强烈推荐！"</p>
+        <small style="color: #aaa;">- Michael R.</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="future-features">
+    <h2 class="section-title">即将推出的功能</h2>
+    
+    <div class="feature-group">
+      <div>
+        <h3>核心功能</h3>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon-large">📊</div>
+            <h4 class="feature-title">情绪追踪</h4>
+            <p class="feature-description">记录您的感受、原因，探索随时间变化的情绪模式。通过数据可视化深入了解自己的情绪变化。</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">📈</div>
+            <h4 class="feature-title">周月度回顾</h4>
+            <p class="feature-description">分析情绪趋势，包括最佳和最差情绪时段、平均情绪和情绪波动范围。获取个性化的改善建议。</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">🧘</div>
+            <h4 class="feature-title">活动记录</h4>
+            <p class="feature-description">追踪冥想、跑步、俯卧撑等活动，建立情绪与活动的关联分析，发现对情绪有积极影响的习惯。</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>个性化体验</h3>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon-large">🎯</div>
+            <h4 class="feature-title">智能建议</h4>
+            <p class="feature-description">基于您的情绪数据和活动记录，提供个性化的改善建议和活动推荐。</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">⏰</div>
+            <h4 class="feature-title">自定义提醒</h4>
+            <p class="feature-description">设置个性化的情绪记录提醒，确保持续追踪。获取每周情绪报告邮件，了解自己的进步。</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">🎨</div>
+            <h4 class="feature-title">主题定制</h4>
+            <p class="feature-description">选择自己喜欢的界面主题和色彩搭配，打造专属的情绪探索空间。</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>社交功能</h3>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon-large">👥</div>
+            <h4 class="feature-title">情绪支持圈</h4>
+            <p class="feature-description">建立属于自己的情绪支持网络，与志同道合的伙伴一起成长。可以选择分享情绪历程和心得。</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">🤝</div>
+            <h4 class="feature-title">匿名互助</h4>
+            <p class="feature-description">在保护隐私的前提下，参与匿名的情绪互助计划，给予和获得情感支持。</p>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon-large">🎁</div>
+            <h4 class="feature-title">成就分享</h4>
+            <p class="feature-description">将自己在情绪探索旅程中获得的成就和心得，以优美的形式分享给关心的人。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="credits">由情绪游戏工作室制作 ❤️</div>
+  
+  <div class="scroll-down">
+    向下滚动以了解更多 ↓
+  </div>
+</div>
+
+<div class="game-container" style="display: none;">
+  <button class="back-button" id="backBtn">返回</button>
+  
+  <div class="step-indicator">
+    <div class="step-dot active" data-step="1"></div>
+    <div class="step-dot" data-step="2"></div>
+    <div class="step-dot" data-step="3"></div>
+  </div>
+
+  <!-- Step 1: Weather Selection -->
+  <div class="step-container active" id="step1">
+    <h2 class="step-title">选择今天的情绪天气</h2>
+    <div class="weather-selector">
+      <div class="weather-option" data-island="happy">
+        <h2>晴朗 🌞</h2>
+        <p>您感到快乐，前往快乐岛</p>
+      </div>
+      <div class="weather-option" data-island="relax">
+        <h2>多云 ⛅</h2>
+        <p>您需要放松，前往放松岛</p>
+      </div>
+      <div class="weather-option" data-island="sad">
+        <h2>阴天 🌧️</h2>
+        <p>您感到难过，前往忧伤岛</p>
+      </div>
+      <div class="weather-option" data-island="anxiety">
+        <h2>风暴 🌪️</h2>
+        <p>您感到焦虑，前往焦虑岛</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Island Introduction -->
+  <div class="step-container" id="step2">
+    <h2 class="step-title">欢迎来到 <span class="island-name"></span></h2>
+    <div class="island-intro">
+      <!-- Dynamic content will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Step 3: Island Activities -->
+  <div class="step-container" id="step3">
+    <h2 class="step-title"><span class="island-name"></span> 探索</h2>
+    <div class="island-content"></div>
+  </div>
+</div>
+
+<div class="modal" id="question-modal">
+  <span class="close-modal">&times;</span>
+  <div class="modal-content">
+    <h3 id="question-text"></h3>
+    <button class="answer-btn" data-answer="A"></button>
+    <button class="answer-btn" data-answer="B"></button>
+  </div>
+</div>
+
+<script>
+const sadQuestions = [
+  {
+    question: "今天你锻炼了吗？",
+    answers: {
+      A: "是的，我锻炼了",
+      B: "不，我没有锻炼" 
+    },
+    feedback: {
+      A: "太好了！锻炼有助于释放压力，产生快乐的荷尔蒙",
+      B: "试着开始简单的散步，逐渐养成锻炼的习惯"
+    },
+    badge: "🏃 锻炼大师"
+  },
+  {
+    question: "你今天出门了吗？",
+    answers: {
+      A: "是的，我呼吸了新鲜空气",
+      B: "不，我待在室内"
+    },
+    feedback: {
+      A: "新鲜空气可以大大改善情绪！",
+      B: "试着明天去散步，换个环境有助于心情"
+    },
+    badge: "🌳 户外探险者"
+  },
+  {
+    question: "你今天和别人说话了吗？",
+    answers: {
+      A: "是的，我和朋友/家人聊过",
+      B: "不，我一个人"
+    },
+    feedback: {
+      A: "保持社交联系是好的！这能提供更多支持",
+      B: "给一个你关心的人发个消息，沟通带来温暖"
+    },
+    badge: "🗣️ 社交大师"
+  },
+  {
+    question: "你今天吃得好吗？",
+    answers: {
+      A: "是的，我按时吃了均衡的餐",
+      B: "不，我吃得不规律"
+    },
+    feedback: {
+      A: "照顾好你的身体很重要！继续保持！",
+      B: "从下一餐开始，尝试吃点健康的东西"
+    },
+    badge: "🍎 健康饮食"
+  },
+  {
+    question: "你今天控制了手机使用时间吗？",
+    answers: {
+      A: "是的，我有意识地减少了使用",
+      B: "不，我一直在玩手机"
+    },
+    feedback: {
+      A: "控制手机使用可以帮助保持情绪平静",
+      B: "试着为使用设定时间限制，给自己留出不看屏幕的时间"
+    },
+    badge: "📱 数字平衡"
+  },
+  {
+    question: "你今天制定了计划吗？",
+    answers: {
+      A: "是的，我列出了要做的事情",
+      B: "不，我感到迷茫"
+    },
+    feedback: {
+      A: "制定计划为生活提供了方向！太棒了！",
+      B: "从明天开始，写下三件小事去做"
+    },
+    badge: "📝 规划大师"
+  },
+  {
+    question: "你今天喝足够的水了吗？",
+    answers: {
+      A: "是的，我确保保持水分",
+      B: "不，我常常忘记喝水"
+    },
+    feedback: {
+      A: "保持水分对身体和心理都很重要！",
+      B: "设置一个喝水提醒，照顾好自己很重要"
+    },
+    badge: "💧 水分大师"
+  },
+  {
+    question: "你今天睡得好吗？",
+    answers: {
+      A: "是的，我睡得很好",
+      B: "不，我的睡眠质量不好"
+    },
+    feedback: {
+      A: "良好的睡眠是调节情绪的关键！继续保持！",
+      B: "试着形成规律的睡眠习惯，以改善睡眠质量"
+    },
+    badge: "😴 睡眠守护者"
+  }
+];
+
+const anxietyQuestions = [
+  {
+    question: "当你感到焦虑时，你是否尝试通过深呼吸冥想来平静自己？",
+    answers: {
+      A: "是的，我会用呼吸来平静自己",
+      B: "不，我通常让焦虑加剧"
+    },
+    feedback: {
+      A: "太好了！深呼吸是一种有效的减轻焦虑的方法。继续练习！", 
+      B: "试试4-7-8的呼吸技巧：吸气4秒，屏住7秒，呼气8秒。"
+    },
+    badge: "🫁 冥想大师"
+  },
+  {
+    question: "你能识别自己焦虑时的身体反应吗？（例如心跳加快，掌心出汗）",
+    answers: {
+      A: "是的，我注意到这些身体信号",
+      B: "不，我很难注意到这些变化"
+    },
+    feedback: {
+      A: "很棒的意识！识别焦虑信号是重要的第一步。",
+      B: "试着更加关注身体感受，以更早地察觉并应对焦虑。"
+    },
+    badge: "🧠 觉察专家"
+  },
+  {
+    question: "当你面对焦虑时，你会怎么做？",
+    answers: {
+      A: "我会积极寻找缓解焦虑的方法",
+      B: "我通常什么都不做，等它过去"
+    },
+    feedback: {
+      A: "积极应对是一种很好的态度！继续保持！",
+      B: "考虑学习一些应对策略，比如正念练习或锻炼。"
+    },
+    badge: "⭐ 应对专家"
+  }
+];
+
+// Language handling
+function getCurrentLanguage() {
+  const path = window.location.pathname;
+  if (path.startsWith('/zh')) return 'zh';
+  if (path.startsWith('/es')) return 'es';
+  if (path.startsWith('/fr')) return 'fr';
+  if (path.startsWith('/de')) return 'de';
+  return 'en';
+}
+
+function updateLanguageSelect() {
+  const currentLang = getCurrentLanguage();
+  const select = document.getElementById('languageSelect');
+  if (select) {
+    select.value = currentLang;
+  }
+}
+
+// Modify start button href
+document.getElementById('start-game-btn').addEventListener('click', (e) => {
+  e.preventDefault();
+  const currentLang = getCurrentLanguage();
+  const gamePath = currentLang === 'en' ? '/game' : `/${currentLang}/game`;
+  window.location.href = gamePath;
+});
+
+// Add language change handler
+document.getElementById('languageSelect').addEventListener('change', (e) => {
+  const newLang = e.target.value;
+  const currentPath = window.location.pathname;
+  
+  let newPath;
+  if (currentPath.includes('/game')) {
+    // If on game page
+    newPath = newLang === 'en' ? '/game' : `/${newLang}/game`;
+  } else {
+    // If on landing page
+    newPath = newLang === 'en' ? '/' : `/${newLang}`;
+  }
+  
+  localStorage.setItem('selectedLanguage', newLang);
+  window.location.href = newPath;
+});
+
+// On page load
+const savedLang = localStorage.getItem('selectedLanguage');
+if (savedLang) {
+  document.getElementById('languageSelect').value = savedLang;
+}
+
+// Call this when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  updateLanguageSelect();
+  
+  // Update start button href
+  const startButton = document.getElementById('start-game-btn');
+  if (startButton) {
+    const currentLang = getCurrentLanguage();
+    startButton.href = currentLang === 'en' ? '/game' : `/${currentLang}/game`;
+  }
+  
+  // Add click handlers for FAQ items
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      // Check if this item is already active
+      const isActive = item.classList.contains('active');
+      
+      // Close all FAQ items
+      document.querySelectorAll('.faq-item').forEach(otherItem => {
+        otherItem.classList.remove('active');
+      });
+      
+      // If this item wasn't active before, make it active
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    });
+  });
+
+  document.querySelector('.scroll-down').addEventListener('click', () => {
+    const featureGrid = document.querySelector('.feature-grid');
+    featureGrid.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Add scroll listener to hide/show scroll indicator
+  window.addEventListener('scroll', () => {
+    const scrollDown = document.querySelector('.scroll-down');
+    if (window.scrollY > 100) {
+      scrollDown.style.opacity = '0';
+      scrollDown.style.pointerEvents = 'none';
+    } else {
+      scrollDown.style.opacity = '1';
+      scrollDown.style.pointerEvents = 'auto';
+    }
+  });
+});
+
+let currentStep = 1;
+let selectedIsland = null;
+let currentIsland = null;
+let collectedGems = {
+  sad: [],
+  anxiety: []
+};
+
+// Function to show intro animation
+function showIntroAnimation() {
+  const introOverlay = document.createElement('div');
+  introOverlay.className = 'intro-overlay';
+  
+  const content = `
+    <h1 class="intro-title">情绪探险之旅</h1>
+    <div class="intro-text">
+      欢迎来到这个神秘而美妙的情绪世界！这个世界由五座情绪岛屿组成，每座岛屿代表着不同的情绪。作为一名勇敢的探险者，你将从你的"情绪天气"开始一段独特的旅程。通过与岛屿上的任务和挑战互动，你将重新发现情绪的平衡和动力。
+    </div>
+    <div class="emotion-compass">
+      <div class="compass-circle"></div>
+      <div class="emotion-symbol" style="top: 0; left: 50%; transform: translate(-50%, -50%)">🌞</div>
+      <div class="emotion-symbol" style="top: 50%; right: 0; transform: translate(50%, -50%)">⛅</div>
+      <div class="emotion-symbol" style="bottom: 0; left: 50%; transform: translate(-50%, 50%)">🌧️</div>
+      <div class="emotion-symbol" style="top: 50%; left: 0; transform: translate(-50%, -50%)">🌪️</div>
+    </div>
+    <button class="start-journey">开始冒险</button>
+  `;
+  
+  introOverlay.innerHTML = content;
+  document.body.appendChild(introOverlay);
+  
+  // Add click handler for start button
+  const startButton = introOverlay.querySelector('.start-journey');
+  startButton.addEventListener('click', () => {
+    introOverlay.style.opacity = '0';
+    setTimeout(() => {
+      introOverlay.remove();
+      document.querySelector('.game-container').style.display = 'block';
+    }, 1000);
+  });
+}
+
+// Initialize landing page
+function initializeLandingPage() {
+  const emotions = ['🌞', '⛅', '🌧️', '🌪️', '✨', '🌈', '🌙', '⭐'];
+  
+  // Create floating emotion elements
+  emotions.forEach((emotion, index) => {
+    const emotionEl = document.createElement('div');
+    emotionEl.className = 'floating-emotions';
+    emotionEl.textContent = emotion;
+    emotionEl.style.left = `${Math.random() * 100}vw`;
+    emotionEl.style.top = `${Math.random() * 100}vh`;
+    emotionEl.style.animationDelay = `${index * 0.5}s`;
+    document.querySelector('.landing-page').appendChild(emotionEl);
+  });
+
+  // Add start game button handler
+  document.getElementById('start-game-btn').addEventListener('click', () => {
+    const landingPage = document.getElementById('landing-page');
+    landingPage.style.animation = 'fadeOut 1s ease forwards';
+    
+    setTimeout(() => {
+      landingPage.style.display = 'none';
+      showIntroAnimation();
+    }, 1000);
+  });
+}
+
+// Modify your existing DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', () => {
+  // Hide game container initially
+  document.querySelector('.game-container').style.display = 'none';
+  
+  // Initialize landing page
+  initializeLandingPage();
+  
+  initializeIslands();
+  setupEventListeners();
+  // Start with back button hidden
+  document.getElementById('backBtn').style.display = 'none';
+});
+
+function initializeIslands() {
+  // Only create eggs when showing island content
+  setupEventListeners();
+}
+
+function showIslandContent() {
+  if (!selectedIsland) {
+    console.error('No island selected');
+    return;
+  }
+
+  // Clear previous content
+  const islandContainer = document.querySelector('.island-content');
+  islandContainer.innerHTML = '';
+
+  // Create island specific HTML based on selected island
+  let islandHtml = '';
+  
+  if (selectedIsland === 'sad') {
+    islandHtml = `
+      <div id="sad-island" style="display: block">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>  
+        </div>
+        <div class="badge-collection">
+          ${sadQuestions.map((q, i) => `
+            <div class="badge" data-badge-index="${i}">
+              <span class="badge-icon">${q.badge.split(' ')[0]}</span>
+              <span class="badge-name">${q.badge.split(' ')[1]}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div id="sad-eggs" class="egg-container"></div>
+        <div id="sad-gems" class="gem-collection"></div>
+        <div class="completion-reward">
+          <h3>恭喜你完成了忧伤岛的探索！🎉</h3>
+          <div class="reward-icon">🏆</div>
+          <p>你学会了接受和管理悲伤的情绪</p>
+        </div>
+      </div>
+    `;
+  } else if (selectedIsland === 'anxiety') {
+    islandHtml = `
+      <div id="anxiety-island" style="display: block">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <div class="badge-collection">
+          ${anxietyQuestions.map((q, i) => `
+            <div class="badge" data-badge-index="${i}">
+              <span class="badge-icon">${q.badge.split(' ')[0]}</span>
+              <span class="badge-name">${q.badge.split(' ')[1]}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div id="anxiety-eggs" class="egg-container"></div>
+        <div id="anxiety-gems" class="gem-collection"></div>
+        <div class="completion-reward">
+          <h3>恭喜你完成了焦虑岛的探索！🎉</h3>
+          <div class="reward-icon">🏆</div>
+          <p>你掌握了应对焦虑的技巧</p>
+        </div>
+      </div>
+    `;
+  } else if (selectedIsland === 'happy') {
+    islandHtml = `
+      <div id="happy-island">
+        <h2 class="checkin-title">✨ 快乐记录墙 ✨</h2>
+        <div class="checkin-wall" id="checkin-wall"></div>
+        <button id="checkin-btn" class="answer-btn">今天签到</button>
+        <div class="share-message" id="share-message">
+          感谢您分享您的快乐！让我们一起传播快乐 🌟
+        </div>
+      </div>
+    `;
+  } else if (selectedIsland === 'relax') {
+    islandHtml = `
+      <div id="relax-island" style="display: block">
+        <h2 class="step-title">放松技巧</h2>
+        <div class="piggy-bank">
+          <svg viewBox="0 0 100 100">
+            <path d="M20,50 C20,30 40,20 50,20 C60,20 80,30 80,50 C80,70 60,80 50,80 C40,80 20,70 20,50" 
+                  fill="#FFB6C1" stroke="#FF69B4" stroke-width="2"/>
+            <circle cx="40" cy="45" r="3" fill="#000"/>
+            <path d="M55,55 Q60,60 65,55" fill="none" stroke="#000" stroke-width="2"/>
+            <path d="M75,45 Q80,40 85,45" fill="none" stroke="#FF69B4" stroke-width="3"/>
+          </svg>
+        </div>
+        <div id="relax-tips"></div>
+      </div>
+    `;
+  }
+
+  islandContainer.innerHTML = islandHtml;
+
+  // Now that containers exist, we can create eggs and gems
+  if (selectedIsland === 'sad') {
+    createEggs('sad-eggs', sadQuestions.length);
+    createGems('sad-gems', sadQuestions.length);
+    initializeSadIsland();
+  } else if (selectedIsland === 'anxiety') {
+    createEggs('anxiety-eggs', anxietyQuestions.length);
+    createGems('anxiety-gems', anxietyQuestions.length);
+    initializeAnxietyIsland();
+  } else if (selectedIsland === 'happy') {
+    initializeHappyIsland();
+  } else if (selectedIsland === 'relax') {
+    initializeRelaxIsland();
+  }
+}
+
+function createEggs(containerId, count) {
+  const container = document.getElementById(containerId);
+  for (let i = 0; i < count; i++) {
+    const egg = document.createElement('div');
+    egg.className = 'egg';
+    egg.dataset.index = i;
+    container.appendChild(egg);
+  }
+}
+
+function createGems(containerId, count) {
+  const container = document.getElementById(containerId);
+  for (let i = 0; i < count; i++) {
+    const gem = document.createElement('div');
+    gem.className = 'gem';
+    gem.innerHTML = '💎';
+    container.appendChild(gem);
+  }
+}
+
+function setupEventListeners() {
+  // Add back button handler
+  const backBtn = document.getElementById('backBtn');
+  backBtn.addEventListener('click', () => {
+    if (currentStep > 1) {
+      currentStep--;
+      updateStepDisplay();
+      backBtn.style.display = currentStep > 1 ? 'block' : 'none';
+    }
+  });
+
+  // Weather selection handlers
+  document.querySelectorAll('.weather-option').forEach(option => {
+    option.addEventListener('click', () => {
+      selectedIsland = option.dataset.island;
+      
+      // Highlight selected weather
+      document.querySelectorAll('.weather-option').forEach(opt => {
+        opt.style.transform = 'scale(1)';
+        opt.style.border = '2px solid transparent';
+      });
+      option.style.transform = 'scale(1.05)';
+      option.style.border = '2px solid white';
+
+      // Progress to next step after short delay
+      setTimeout(() => {
+        currentStep = 2;
+        updateStepDisplay();
+        document.getElementById('backBtn').style.display = 'block';
+      }, 300);
+    });
+  });
+
+  // Island intro click handler to progress to activities
+  document.querySelector('.island-intro').addEventListener('click', () => {
+    currentStep = 3;
+    updateStepDisplay();
+  });
+
+  setupIslandEventListeners();
+
+  document.querySelector('.close-modal').addEventListener('click', closeModal);
+}
+
+function setupIslandEventListeners() {
+  // Setup specific island features
+  switch(selectedIsland) {
+    case 'happy':
+      initializeHappyIsland();
+      break;
+    case 'relax':
+      initializeRelaxIsland();
+      break;
+    case 'sad':
+      initializeSadIsland();
+      break;
+    case 'anxiety':
+      initializeAnxietyIsland();
+      break;
+  }
+}
+
+function updateStepDisplay() {
+  // Update step dots
+  document.querySelectorAll('.step-dot').forEach(dot => {
+    dot.classList.remove('active');
+  });
+  const currentDot = document.querySelector(`.step-dot[data-step="${currentStep}"]`);
+  if (currentDot) {
+    currentDot.classList.add('active');
+  }
+
+  // Update step containers
+  document.querySelectorAll('.step-container').forEach(container => {
+    container.classList.remove('active');
+  });
+  const currentStepContainer = document.getElementById(`step${currentStep}`);
+  if (currentStepContainer) {
+    currentStepContainer.classList.add('active');
+  }
+
+  // Handle step-specific updates
+  if (currentStep === 2) {
+    updateIslandIntro();
+  } else if (currentStep === 3) {
+    showIslandContent();
+  }
+}
+
+function updateIslandIntro() {
+  const introContent = {
+    happy: {
+      title: "快乐岛",
+      description: `
+        <div style="text-align: center; margin-bottom: 20px;">
+          这里充满阳光和欢笑。让我们分享快乐时刻。
+        </div>
+        <button class="answer-btn" id="start-happy-journey" style="display: block; margin: 20px auto;">
+          探索开始 ☀️
+        </button>
+      `,
+      icon: "🌞"
+    },
+    relax: {
+      title: "放松岛",
+      description: `
+        <div style="text-align: center; margin-bottom: 20px;">
+          在这里放下烦恼，享受平静与安宁。
+        </div>
+        <button class="answer-btn" id="start-relax-journey" style="display: block; margin: 20px auto;">
+          探索开始 🌺
+        </button>
+      `,
+      icon: "⛅"
+    },
+    sad: {
+      title: "忧伤岛",
+      description: `
+        <div style="text-align: center; margin-bottom: 20px;">
+          我们将一起接纳和理解这些感受，慢慢让心情转晴。
+        </div>
+        <button class="answer-btn" id="start-sad-journey" style="display: block; margin: 20px auto;">
+          探索开始 ✨
+        </button>
+      `,
+      icon: "🌧️"
+    },
+    anxiety: {
+      title: "焦虑岛",
+      description: `
+        <div style="text-align: center; margin-bottom: 20px;">
+          在这里我们将一起学习如何应对焦虑，找到内心的平静。
+          通过一系列任务，您将掌握应对焦虑的实用技巧。
+        </div>
+        <button class="answer-btn" id="start-anxiety-journey" style="display: block; margin: 20px auto;">
+          探索开始 🌟
+        </button>
+      `,
+      icon: "🌪️"
+    }
+  };
+
+  const intro = introContent[selectedIsland];
+  document.querySelectorAll('.island-name').forEach(el => {
+    el.textContent = intro.title;
+  });
+  
+  const introHtml = `
+    <div class="island-intro-content" style="text-align: center; padding: 40px;">
+      <div style="font-size: 64px; margin-bottom: 20px;">${intro.icon}</div>
+      <div style="font-size: 18px; line-height: 1.6;">${intro.description}</div>
+    </div>
+  `;
+  
+  document.querySelector('.island-intro').innerHTML = introHtml;
+
+  // Add click handlers for all journey buttons
+  ['happy', 'relax', 'sad', 'anxiety'].forEach(islandType => {
+    const startButton = document.getElementById(`start-${islandType}-journey`);
+    if (startButton) {
+      startButton.addEventListener('click', () => {
+        currentStep = 3;
+        updateStepDisplay();
+      });
+    }
+  });
+}
+
+function handleEggClick(egg) {
+  const index = parseInt(egg.dataset.index);
+  const questions = currentIsland === 'sad' ? sadQuestions : anxietyQuestions;
+  
+  if (collectedGems[currentIsland].includes(index)) {
+    return;
+  }
+
+  egg.classList.add('cracking');
+  createEggParticles(egg);
+  
+  const reward = document.createElement('div');
+  reward.className = 'reward';
+  reward.textContent = '🎁';
+  egg.appendChild(reward);
+  
+  setTimeout(() => {
+    reward.classList.add('falling');
+    egg.classList.add('opened');
+    showQuestion(questions[index], index);
+  }, 500);
+}
+
+function createEggParticles(egg) {
+  const particlesContainer = document.createElement('div');
+  particlesContainer.className = 'egg-particles';
+  
+  for (let i = 0; i < 10; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const angle = (i / 10) * Math.PI * 2;
+    const speed = 2 + Math.random() * 2;
+    
+    particle.style.left = '50%';
+    particle.style.top = '50%';
+    
+    const animation = particle.animate([
+      { transform: 'translate(-50%, -50%)' },
+      { 
+        transform: `translate(${Math.cos(angle) * 50}px, ${Math.sin(angle) * 50}px)`,
+        opacity: 0
+      }
+    ], {
+      duration: 1000,
+      easing: 'ease-out'
+    });
+    
+    particlesContainer.appendChild(particle);
+  }
+  
+  egg.appendChild(particlesContainer);
+  setTimeout(() => particlesContainer.remove(), 1000);
+}
+
+function showQuestion(questionData, index) {
+  const modal = document.getElementById('question-modal');
+  const questionText = document.getElementById('question-text');
+  const answerButtons = modal.querySelectorAll('.answer-btn');
+
+  // Make sure buttons are visible for new questions
+  answerButtons.forEach(btn => btn.style.display = 'block');
+
+  questionText.textContent = questionData.question;
+  answerButtons[0].textContent = questionData.answers.A;
+  answerButtons[1].textContent = questionData.answers.B;
+
+  answerButtons.forEach(button => {
+    button.onclick = () => handleAnswer(questionData, button.dataset.answer, index);
+  });
+
+  modal.style.display = 'block';
+}
+
+function handleAnswer(questionData, answer, index) {
+  const modal = document.getElementById('question-modal');
+  const questionText = document.getElementById('question-text');
+  const answerButtons = modal.querySelectorAll('.answer-btn');
+  
+  answerButtons.forEach(btn => btn.style.display = 'none');
+  
+  questionText.innerHTML = `
+    ${questionData.feedback[answer]}
+    <div style="margin-top: 15px; font-size: 1.2em;">
+      获得的徽章： ${questionData.badge}
+    </div>
+  `;
+  
+  // Unlock the corresponding badge
+  const badge = document.querySelector(`.badge[data-badge-index="${index}"]`);
+  if (badge && !badge.classList.contains('unlocked')) {
+    badge.classList.add('unlocked');
+  }
+  
+  if (!collectedGems[currentIsland].includes(index)) {
+    collectedGems[currentIsland].push(index);
+    updateGems();
+    updateProgress();
+  }
+  
+  setTimeout(() => {
+    closeModal();
+    answerButtons.forEach(btn => btn.style.display = 'block');
+  }, 2000);
+}
+
+function updateProgress() {
+  const islandType = currentIsland;
+  const totalQuestions = islandType === 'sad' ? sadQuestions.length : anxietyQuestions.length;
+  const progress = (collectedGems[islandType].length / totalQuestions) * 100;
+  
+  const progressBar = document.querySelector(`#${islandType}-island .progress-fill`);
+  progressBar.style.width = `${progress}%`;
+
+  // Only update the achievement for the current answered question
+  const lastAnsweredIndex = collectedGems[islandType][collectedGems[islandType].length - 1];
+  if (lastAnsweredIndex !== undefined) {
+    const questionData = sadQuestions[lastAnsweredIndex];
+    if (questionData && questionData.badge) {
+      const achievementType = getBadgeType(questionData.badge);
+      const achievement = document.querySelector(`.achievement[data-achievement="${achievementType}"]`);
+      if (achievement && !achievement.classList.contains('unlocked')) {
+        achievement.classList.add('unlocked');
+        createCelebration();
+      }
+    }
+  }
+
+  // Check completion
+  if (progress === 100) {
+    showCompletionReward(islandType);
+  }
+}
+
+function createCelebration() {
+  const celebration = document.createElement('div');
+  celebration.className = 'celebration';
+  
+  for (let i = 0; i < 50; i++) {
+    const confetti = document.createElement('div');
+    confetti.style.position = 'absolute';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.top = -20 + 'px';
+    confetti.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+    confetti.textContent = ['✨', '🌟', '💫'][Math.floor(Math.random() * 3)];
+    
+    const animation = confetti.animate([
+      { transform: 'translateY(0) rotate(0)', opacity: 1 },
+      { transform: `translateY(${window.innerHeight}px) rotate(${360 + Math.random() * 360}deg)`, opacity: 0 }
+    ], {
+      duration: 1500 + Math.random() * 1000,
+      easing: 'ease-out'
+    });
+    
+    celebration.appendChild(confetti);
+  }
+  
+  document.body.appendChild(celebration);
+  setTimeout(() => celebration.remove(), 2500);
+}
+
+function updateGems() {
+  const gems = document.querySelectorAll(`#${currentIsland}-gems .gem`);
+  collectedGems[currentIsland].forEach(index => {
+    gems[index].classList.add('collected');
+  });
+  
+  // Remove the problematic showCompletionModal call
+  if (collectedGems[currentIsland].length === gems.length) {
+    setTimeout(() => {
+      showCompletionReward(currentIsland);
+    }, 1000);
+  }
+}
+
+// Make sure the showCompletionReward function shows all necessary completion info
+function showCompletionReward(islandType) {
+  const rewardDiv = document.querySelector(`#${islandType}-island .completion-reward`);
+  if (rewardDiv) {
+    rewardDiv.style.display = 'block';
+    rewardDiv.style.animation = 'fadeIn 0.5s ease';
+    
+    // Create celebration effects
+    createCelebration();
+  }
+}
+
+function closeModal() {
+  document.getElementById('question-modal').style.display = 'none';
+}
+
+function initializeHappyIsland() {
+  const checkinBtn = document.getElementById('checkin-btn');
+  const checkinWall = document.getElementById('checkin-wall');
+  const shareMessage = document.getElementById('share-message');
+
+  if (!checkinBtn || !checkinWall || !shareMessage) return;
+
+  checkinBtn.addEventListener('click', () => {
+    // Create a new checkin entry with animation
+    const entry = document.createElement('div');
+    entry.className = 'checkin-entry';
+    
+    // Get current date and time
+    const now = new Date();
+    const dateStr = `${now.getMonth() + 1}/${now.getDate()}`;
+    const timeStr = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+    
+    entry.innerHTML = `
+      <span>✨ 访客 ${dateStr} ${timeStr}</span>
+    `;
+    
+    checkinWall.appendChild(entry);
+    
+    // Show share message
+    shareMessage.style.display = 'block';
+    shareMessage.style.animation = 'fadeIn 0.5s ease';
+    
+    // Disable checkin button
+    checkinBtn.disabled = true;
+    checkinBtn.textContent = '已签到';
+    checkinBtn.style.opacity = '0.7';
+  });
+}
+
+function initializeRelaxIsland() {
+  const relaxTips = document.getElementById('relax-tips');
+  if (!relaxTips) return;
+
+  const relaxingTips = [
+    "仰望天空，感受宇宙能量",
+    "双脚贴地，汲取大地力量",
+    "深呼吸，连接天地之气",
+    "感受内心跳动，与自然共鸣",
+    "双手合十，凝聚内在能量",
+    "与树木对话，吸收生命力",
+    "聆听流水声，净化心灵",
+    "体会阳光温暖，补充能量"
+  ];
+
+  // Add click handler for piggy bank
+  const piggyBank = document.querySelector('.piggy-bank');
+  if (piggyBank) {
+    piggyBank.addEventListener('click', () => {
+      if (relaxingTips.length > 0) {
+        // Get a random tip
+        const randomIndex = Math.floor(Math.random() * relaxingTips.length);
+        const tip = relaxingTips[randomIndex];
+        
+        // Create and animate coin/tip coming out of piggy bank
+        const coinTip = document.createElement('p');
+        coinTip.textContent = tip;
+        coinTip.style.position = 'relative';
+        coinTip.style.animation = 'messageAppear 0.5s ease';
+        
+        // Add to tips container
+        relaxTips.insertBefore(coinTip, relaxTips.firstChild);
+        
+        // Animate piggy bank
+        piggyBank.style.animation = 'shake 0.5s ease';
+        setTimeout(() => {
+          piggyBank.style.animation = '';
+        }, 500);
+      }
+    });
+  }
+}
+
+function initializeAnxietyIsland() {
+  currentIsland = 'anxiety';
+  
+  const eggContainer = document.getElementById('anxiety-eggs');
+  if (!eggContainer) return;
+
+  eggContainer.querySelectorAll('.egg').forEach(egg => {
+    egg.addEventListener('click', () => handleEggClick(egg));
+  });
+}
+
+function initializeSadIsland() {
+  currentIsland = 'sad';
+  
+  const eggContainer = document.getElementById('sad-eggs');
+  if (!eggContainer) return;
+
+  eggContainer.querySelectorAll('.egg').forEach(egg => {
+    egg.addEventListener('click', () => handleEggClick(egg));
+  });
+}
+</script></body></html>
