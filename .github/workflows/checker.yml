@@ -35,7 +35,7 @@ jobs:
       - name: Run SEO Checker on website
         run: |
           SEOchecker --all ${{ github.event.inputs.website_url }} > seo-checker-report.txt
-          # Use the input URL for SEO checking
+          cat seo-checker-report.txt  # Print output to console for debugging
 
       # Step 5: Upload SEO Check Results as an Artifact
       - name: Upload SEO check results
