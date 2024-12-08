@@ -34,7 +34,7 @@ jobs:
       # Step 4: Run the SEO checker tool with URL from input
       - name: Run SEO Checker on website
         run: |
-          SEOchecker --all ${{ github.event.inputs.website_url }} > seo-checker-report.txt || echo "SEO Checker failed with exit code $?" >> seo-checker-report.txt
+          SEOchecker --all '${{ github.event.inputs.website_url }}' > seo-checker-report.txt || echo "SEO Checker failed with exit code $?" >> seo-checker-report.txt
           cat seo-checker-report.txt  # Print output to console for debugging
 
       # Step 5: Upload SEO Check Results as an Artifact
