@@ -13,6 +13,10 @@ const pages = [
 ];
 
 const defaultLang = 'en';  // The default language
+const resultsFile = './seo-check-results.txt';  // File to save SEO check results
+
+// Create or overwrite the results file
+fs.writeFileSync(resultsFile, 'SEO Check Results:\n\n', 'utf-8');
 
 async function checkPageSEO(pageUrl) {
   try {
@@ -24,44 +28,45 @@ async function checkPageSEO(pageUrl) {
     const $ = cheerio.load(html);
 
     // SEO Checks
-    console.log(`Checking SEO for: ${pageUrl}\n`);
+    const results = [];
+    results.push(`Checking SEO for: ${pageUrl}\n`);
 
     // 1. Title Tag
     const title = $('head title').text();
     if (!title) {
-      console.log('[Warning] Missing <title> tag');
+      results.push('[Warning] Missing <title> tag');
     } else if (title.length < 30 || title.length > 60) {
-      console.log('[Suggestion] <title> should be between 30-60 characters.');
+      results.push('[Suggestion] <title> should be between 30-60 characters.');
     }
 
     // 2. Meta Description
     const description = $('head meta[name="description"]').attr('content');
     if (!description) {
-      console.log('[Warning] Missing <meta name="description"> tag');
+      results.push('[Warning] Missing <meta name="description"> tag');
     } else if (description.length < 50 || description.length > 160) {
-      console.log('[Suggestion] <meta name="description"> should be between 50-160 characters.');
+      results.push('[Suggestion] <meta name="description"> should be between 50-160 characters.');
     }
 
     // 3. H1 Tag
     const h1 = $('h1').text();
     if (!h1) {
-      console.log('[Warning] Missing <h1> tag');
+      results.push('[Warning] Missing <h1> tag');
     } else if (h1.length < 10) {
-      console.log('[Suggestion] <h1> should be more descriptive, at least 10 characters.');
+      results.push('[Suggestion] <h1> should be more descriptive, at least 10 characters.');
     }
 
     // 4. Missing or incorrect canonical tag
     const canonical = $('head link[rel="canonical"]').attr('href');
     if (!canonical) {
-      console.log('[Warning] Missing <link rel="canonical"> tag');
+      results.push('[Warning] Missing <link rel="canonical"> tag');
     } else if (canonical !== pageUrl) {
-      console.log('[Suggestion] The <link rel="canonical"> tag should point to the correct page URL: ', pageUrl);
+      results.push('[Suggestion] The <link rel="canonical"> tag should point to the correct page URL: ', pageUrl);
     }
 
     // 5. Base Tag Issues
     const baseHref = $('head base').attr('href');
     if (baseHref && baseHref !== '/') {
-      console.log('[Suggestion] <base href="/"> should be used for root-level pages to avoid relative URL issues.');
+      results.push('[Suggestion] <base href="/"> should be used for root-level pages to avoid relative URL issues.');
     }
 
     // 6. Broken Links (Internal Links)
@@ -78,10 +83,10 @@ async function checkPageSEO(pageUrl) {
       try {
         const linkResponse = await axios.head(linkUrl); // Perform a HEAD request to check if the link exists
         if (linkResponse.status !== 200) {
-          console.log(`[Warning] Broken link found: ${linkUrl}`);
+          results.push(`[Warning] Broken link found: ${linkUrl}`);
         }
       } catch (error) {
-        console.log(`[Warning] Broken link found: ${linkUrl}`);
+        results.push(`[Warning] Broken link found: ${linkUrl}`);
       }
     }
 
@@ -90,7 +95,7 @@ async function checkPageSEO(pageUrl) {
     images.each(function () {
       const altText = $(this).attr('alt');
       if (!altText) {
-        console.log('[Warning] Image missing <alt> attribute:', $(this).attr('src'));
+        results.push('[Warning] Image missing <alt> attribute:', $(this).attr('src'));
       }
     });
 
@@ -99,12 +104,15 @@ async function checkPageSEO(pageUrl) {
     await axios.get(pageUrl); // Measure the time for a full page load
     const loadTime = (Date.now() - start) / 1000;
     if (loadTime > 3) {
-      console.log('[Suggestion] Page load time is too slow, consider optimizing resources. Time:', loadTime, 's');
+      results.push('[Suggestion] Page load time is too slow, consider optimizing resources. Time:', loadTime, 's');
     }
 
-    console.log('\n--- End of SEO Check ---\n');
+    results.push('\n--- End of SEO Check ---\n');
+
+    // Save the results to the file
+    fs.appendFileSync(resultsFile, results.join('\n'), 'utf-8');
   } catch (error) {
-    console.log(`[Error] Unable to fetch or check page: ${pageUrl}`);
+    console.error(`[Error] Unable to fetch or check page: ${pageUrl}`);
   }
 }
 
