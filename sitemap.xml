@@ -6,6 +6,56 @@
         <priority>1.0</priority>
     </url>
     <url>
+        <loc>https://mood-island.heytcm.com/app/anxiety_island</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://mood-island.heytcm.com/app/happy_island</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://mood-island.heytcm.com/app</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://mood-island.heytcm.com/app/mood_selection</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://mood-island.heytcm.com/app/question_popup</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://mood-island.heytcm.com/app/relax_island</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://mood-island.heytcm.com/app/sad_island</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://mood-island.heytcm.com/app/share</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://mood-island.heytcm.com/app/splash</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://mood-island.heytcm.com/app/summary</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
         <loc>https://mood-island.heytcm.com/cheer-you-up-list</loc>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
