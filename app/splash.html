@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>启动页 - 情绪探险之旅</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .splash-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .weather-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .clouds {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .cloud {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100px); }
+        }
+        
+        .content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .logo {
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 40px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .start-btn {
+            margin-top: 40px;
+            padding: 16px 42px;
+            border-radius: 30px;
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+            background-color: rgba(255, 255, 255, 0.35);
+        }
+        
+        .weather-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .rain {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.7));
+            animation: rain linear infinite;
+        }
+        
+        @keyframes rain {
+            0% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="splash-container">
+        <!-- 动态天气背景 -->
+        <div class="weather-bg bg-gradient-to-b from-blue-400 to-indigo-600"></div>
+        
+        <!-- 云层动画 -->
+        <div class="clouds">
+            <div class="cloud" style="width: 100px; height: 100px; top: 15%; animation-duration: 80s;"></div>
+            <div class="cloud" style="width: 70px; height: 70px; top: 25%; animation-duration: 60s; animation-delay: 2s;"></div>
+            <div class="cloud" style="width: 120px; height: 120px; top: 38%; animation-duration: 90s; animation-delay: 10s;"></div>
+            <div class="cloud" style="width: 80px; height: 80px; top: 55%; animation-duration: 70s; animation-delay: 20s;"></div>
+        </div>
+        
+        <!-- 天气动画效果 (雨滴、阳光等) -->
+        <div class="weather-animation" id="weatherEffects"></div>
+        
+        <!-- 内容区域 -->
+        <div class="content px-6 text-center">
+            <div class="logo">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18Z" fill="white"/>
+                    <path d="M12 20.5C7.58172 20.5 4 16.9183 4 12.5C4 8.08172 7.58172 4.5 12 4.5C16.4183 4.5 20 8.08172 20 12.5C20 16.9183 16.4183 20.5 12 20.5Z" stroke="white" stroke-width="2"/>
+                    <path d="M12 7V12L15 15" stroke="#4338CA" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            
+            <h1 class="text-4xl font-bold mb-2">情绪探险之旅</h1>
+            <p class="text-lg mb-8 opacity-90">发现你内心的天气，开始心灵之旅</p>
+            
+            <div class="animate-bounce mt-12 mb-8">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 5V19M12 19L6 13M12 19L18 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            
+            <button class="start-btn text-lg">
+                开始探险
+                <i class="fas fa-chevron-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 生成随机的雨滴动画
+        const weatherEffects = document.getElementById('weatherEffects');
+        
+        // 创建多个雨滴元素
+        for (let i = 0; i < 40; i++) {
+            const rain = document.createElement('div');
+            rain.classList.add('rain');
+            
+            // 随机位置和动画时间
+            const left = Math.random() * 100;
+            const animationDuration = Math.random() * 2 + 1;
+            const delay = Math.random() * 5;
+            
+            rain.style.left = `${left}%`;
+            rain.style.animationDuration = `${animationDuration}s`;
+            rain.style.animationDelay = `${delay}s`;
+            
+            weatherEffects.appendChild(rain);
+        }
+        
+        // 按钮点击事件
+        document.querySelector('.start-btn').addEventListener('click', () => {
+            window.location.href = 'mood_selection.html';
+        });
+    </script>
+</body>
+</html>

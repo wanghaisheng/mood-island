@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>放松岛 - 情绪探险之旅</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            height: 100vh;
+            background: linear-gradient(to bottom, #60A5FA, #93C5FD);
+            color: #1E3A8A;
+            overflow: hidden;
+        }
+
+        .app-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .island-header {
+            position: relative;
+            padding: 20px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #1E40AF;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:active {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .options-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #1E40AF;
+        }
+
+        .island-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .island-title {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .island-scene {
+            flex: 1;
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clouds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .cloud {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50px;
+            animation: floatCloud linear infinite;
+        }
+
+        @keyframes floatCloud {
+            0% { transform: translateX(-150px); }
+            100% { transform: translateX(100vw); }
+        }
+
+        .island-svg {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.04)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.1));
+        }
+
+        .waves {
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            bottom: 40%;
+            z-index: 0;
+        }
+
+        .wave {
+            position: absolute;
+            height: 40px;
+            width: 100%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%2360A5FA" d="M0,192L48,176C96,160,192,128,288,122.7C384,117,480,139,576,165.3C672,192,768,224,864,213.3C960,203,1056,149,1152,128C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x;
+            background-size: 1440px 40px;
+            animation: wave 15s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-1440px); }
+        }
+
+        .wave:nth-child(2) {
+            opacity: 0.7;
+            animation: wave 20s linear infinite reverse;
+            bottom: 10px;
+        }
+
+        .relaxation-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .relaxation-option {
+            width: 120px;
+            height: 120px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .relaxation-option:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .relaxation-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2563EB;
+        }
+
+        .relaxation-title {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            color: #1E40AF;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-action-btn {
+            background-color: #2563EB;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 16px;
+        }
+
+        .main-action-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 3px rgba(37, 99, 235, 0.3);
+        }
+
+        .secondary-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .secondary-action-btn {
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .secondary-action-btn:active {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .gem-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .gem {
+            width: 40px;
+            height: 40px;
+            margin: 0 8px;
+            position: relative;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #64748B;
+            font-size: 0.7rem;
+        }
+
+        .nav-item.active {
+            color: #2563EB;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+        
+        /* 弹出层 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 24px;
+            width: 85%;
+            max-width: 340px;
+            padding: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .close-modal {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #F3F4F6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4B5563;
+        }
+        
+        /* 呼吸动画 */
+        .breathing-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: rgba(37, 99, 235, 0.2);
+            animation: breathe 5s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.5); opacity: 0.6; }
+        }
+        
+        .seagull {
+            position: absolute;
+            z-index: 2;
+            animation: fly linear infinite;
+        }
+        
+        @keyframes fly {
+            0% { transform: translateX(-50px) translateY(0); }
+            25% { transform: translateX(50px) translateY(-10px); }
+            50% { transform: translateX(150px) translateY(0); }
+            75% { transform: translateX(250px) translateY(-10px); }
+            100% { transform: translateX(350px) translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 岛屿头部 -->
+        <div class="island-header">
+            <button class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            
+            <button class="options-button">
+                <i class="fas fa-ellipsis-h"></i>
+            </button>
+        </div>
+        
+        <!-- 岛屿内容 -->
+        <div class="island-content">
+            <!-- 岛屿标题 -->
+            <div class="island-title">
+                <h1 class="text-3xl font-bold">放松岛</h1>
+                <p class="text-sm opacity-80">平静与安宁，享受宁静的时刻</p>
+            </div>
+            
+            <!-- 岛屿场景 -->
+            <div class="island-scene">
+                <!-- 云 -->
+                <div class="clouds">
+                    <div class="cloud" style="top: 15%; width: 120px; height: 50px; animation-duration: 80s;"></div>
+                    <div class="cloud" style="top: 25%; width: 80px; height: 40px; animation-duration: 60s; animation-delay: 5s;"></div>
+                    <div class="cloud" style="top: 10%; width: 150px; height: 60px; animation-duration: 100s; animation-delay: 10s;"></div>
+                </div>
+                
+                <!-- 海鸥 -->
+                <svg class="seagull" width="30" height="20" viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="top: 20%; animation-duration: 20s;">
+                    <path d="M5 10C5 10 10 5 15 10C20 15 25 10 25 10" stroke="#1E3A8A" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                
+                <svg class="seagull" width="25" height="18" viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="top: 15%; animation-duration: 25s; animation-delay: 5s;">
+                    <path d="M5 10C5 10 10 5 15 10C20 15 25 10 25 10" stroke="#1E3A8A" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                
+                <!-- 海浪 -->
+                <div class="waves">
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                </div>
+                
+                <!-- 岛屿 SVG -->
+                <svg class="island-svg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 海水 -->
+                    <path d="M0 180C0 180 40 160 80 170C120 180 160 190 200 180C240 170 280 160 320 170C360 180 400 190 400 190V300H0V180Z" fill="#60A5FA" />
+                    
+                    <!-- 岛屿 -->
+                    <path d="M120 190C120 190 140 150 180 160C220 170 240 160 260 150C280 140 300 170 320 180C340 190 360 180 380 190C380 190 370 230 340 240C310 250 230 245 200 240C170 235 150 230 130 235C110 240 120 190 120 190Z" fill="#D1D5DB" />
+                    
+                    <!-- 棕榈树 -->
+                    <path d="M180 150C180 150 175 130 170 120C165 110 160 100 170 95C180 90 185 100 190 110C195 120 190 140 190 140" fill="#78350F" />
+                    <path d="M160 100C160 100 170 90 180 95C190 100 185 110 180 115C175 120 165 115 160 100Z" fill="#34D399" />
+                    <path d="M175 90C175 90 185 85 190 90C195 95 190 105 185 105C180 105 175 100 175 90Z" fill="#34D399" />
+                    <path d="M190 95C190 95 200 90 205 95C210 100 205 110 200 110C195 110 190 105 190 95Z" fill="#34D399" />
+                    
+                    <!-- 冥想人物 -->
+                    <circle cx="240" cy="170" r="10" fill="#1E3A8A" />
+                    <path d="M240 180L240 200" stroke="#1E3A8A" stroke-width="2" />
+                    <path d="M230 185L250 185" stroke="#1E3A8A" stroke-width="2" />
+                    <path d="M225 195L235 205" stroke="#1E3A8A" stroke-width="2" />
+                    <path d="M255 195L245 205" stroke="#1E3A8A" stroke-width="2" />
+                </svg>
+                
+                <!-- 放松选项 -->
+                <div class="relaxation-options">
+                    <div class="relaxation-option" id="meditation">
+                        <div class="relaxation-icon">
+                            <i class="fas fa-om fa-2x"></i>
+                        </div>
+                        <div class="relaxation-title">冥想放松</div>
+                    </div>
+                    
+                    <div class="relaxation-option" id="breathing">
+                        <div class="relaxation-icon">
+                            <i class="fas fa-wind fa-2x"></i>
+                        </div>
+                        <div class="relaxation-title">呼吸练习</div>
+                    </div>
+                    
+                    <div class="relaxation-option" id="walking">
+                        <div class="relaxation-icon">
+                            <i class="fas fa-shoe-prints fa-2x"></i>
+                        </div>
+                        <div class="relaxation-title">散步放松</div>
+                    </div>
+                    
+                    <div class="relaxation-option" id="music">
+                        <div class="relaxation-icon">
+                            <i class="fas fa-music fa-2x"></i>
+                        </div>
+                        <div class="relaxation-title">舒缓音乐</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 行动按钮 -->
+            <div class="action-buttons">
+                <button class="main-action-btn" id="relaxBtn">
+                    <i class="fas fa-spa mr-2"></i>开始放松
+                </button>
+                
+                <div class="secondary-actions">
+                    <button class="secondary-action-btn" id="shareBtn">
+                        <i class="fas fa-share-alt"></i>
+                        分享感受
+                    </button>
+                    
+                    <button class="secondary-action-btn" id="journalBtn">
+                        <i class="fas fa-book"></i>
+                        放松日记
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 宝石展示 -->
+            <div class="gem-container">
+                <div class="gem">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#93C5FD" stroke="#60A5FA" stroke-width="1.5" />
+                    </svg>
+                </div>
+                
+                <div class="gem">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#93C5FD" stroke="#60A5FA" stroke-width="1.5" />
+                    </svg>
+                </div>
+                
+                <div class="gem opacity-40">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#93C5FD" stroke="#60A5FA" stroke-width="1.5" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="nav-bar">
+            <div class="nav-item active">
+                <i class="fas fa-compass"></i>
+                <span>探索</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>统计</span>
+            </div>
+            <div class="nav-item">
+                <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center -mt-6 shadow-lg">
+                    <i class="fas fa-plus text-white text-xl"></i>
+                </div>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-gem"></i>
+                <span>宝石</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 冥想弹窗 -->
+    <div class="modal" id="meditationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-lg font-bold text-gray-900">冥想放松</h3>
+                <button class="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="text-center my-6">
+                <div class="breathing-circle">
+                    <span class="text-blue-600 text-xs">专注呼吸</span>
+                </div>
+                
+                <p class="text-gray-600 mt-6 mb-4">跟随圆圈的节奏，让心灵平静下来...</p>
+                
+                <div id="meditationTimer" class="text-3xl font-bold text-blue-600 mb-4">2:00</div>
+                
+                <div class="w-full bg-gray-200 rounded-lg h-2 mb-2">
+                    <div id="meditationProgress" class="bg-blue-600 h-2 rounded-lg" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="flex gap-3 mt-6">
+                <button class="flex-1 py-3 bg-gray-100 rounded-lg text-gray-600 font-medium" id="pauseMeditationBtn">暂停</button>
+                <button class="flex-1 py-3 bg-blue-600 rounded-lg text-white font-medium" id="endMeditationBtn">结束冥想</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 完成放松弹窗 -->
+    <div class="modal" id="relaxCompleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-lg font-bold text-gray-900">放松完成</h3>
+                <button class="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="text-center my-6">
+                <div class="w-20 h-20 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-gem text-3xl text-blue-500"></i>
+                </div>
+                
+                <p class="text-gray-600 mb-4">恭喜你完成了放松练习！这对缓解压力和焦虑非常有帮助。</p>
+                
+                <div class="flex justify-center items-center gap-2 mb-4">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#93C5FD" stroke="#60A5FA" stroke-width="1.5" />
+                    </svg>
+                    <span class="text-blue-600 font-medium">+1 平静宝石</span>
+                </div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button class="flex-1 py-3 bg-gray-100 rounded-lg text-gray-600 font-medium">继续探索</button>
+                <button class="flex-1 py-3 bg-blue-600 rounded-lg text-white font-medium">记录感受</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 放松选项点击事件
+        document.getElementById('meditation').addEventListener('click', function() {
+            document.getElementById('meditationModal').classList.add('active');
+            startMeditation();
+        });
+        
+        document.getElementById('breathing').addEventListener('click', function() {
+            document.getElementById('meditationModal').classList.add('active');
+            startMeditation();
+        });
+        
+        document.getElementById('walking').addEventListener('click', function() {
+            // 在实际应用中，这里会显示散步指导
+            alert('开始散步放松练习');
+        });
+        
+        document.getElementById('music').addEventListener('click', function() {
+            // 在实际应用中，这里会播放舒缓音乐
+            alert('播放舒缓音乐');
+        });
+        
+        // 开始放松按钮点击事件
+        document.getElementById('relaxBtn').addEventListener('click', function() {
+            document.getElementById('meditationModal').classList.add('active');
+            startMeditation();
+        });
+        
+        // 关闭弹窗
+        document.querySelectorAll('.close-modal').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                
+                // 停止冥想计时器
+                clearInterval(meditationInterval);
+            });
+        });
+        
+        // 结束冥想按钮
+        document.getElementById('endMeditationBtn').addEventListener('click', function() {
+            document.getElementById('meditationModal').classList.remove('active');
+            document.getElementById('relaxCompleteModal').classList.add('active');
+            
+            // 停止冥想计时器
+            clearInterval(meditationInterval);
+        });
+        
+        // 暂停冥想按钮
+        let isPaused = false;
+        document.getElementById('pauseMeditationBtn').addEventListener('click', function() {
+            isPaused = !isPaused;
+            this.textContent = isPaused ? '继续' : '暂停';
+        });
+        
+        // 返回按钮
+        document.querySelector('.back-button').addEventListener('click', function() {
+            window.location.href = 'mood_selection.html';
+        });
+        
+        // 冥想计时器逻辑
+        let meditationInterval;
+        let remainingTime = 120; // 2分钟 = 120秒
+        let progress = 0;
+        
+        function startMeditation() {
+            const timerElement = document.getElementById('meditationTimer');
+            const progressElement = document.getElementById('meditationProgress');
+            
+            remainingTime = 120;
+            progress = 0;
+            isPaused = false;
+            
+            updateTimerDisplay();
+            
+            meditationInterval = setInterval(() => {
+                if (!isPaused) {
+                    remainingTime--;
+                    
+                    // 更新进度条
+                    progress = Math.floor(((120 - remainingTime) / 120) * 100);
+                    progressElement.style.width = `${progress}%`;
+                    
+                    updateTimerDisplay();
+                    
+                    // 时间到，自动结束冥想
+                    if (remainingTime <= 0) {
+                        clearInterval(meditationInterval);
+                        document.getElementById('meditationModal').classList.remove('active');
+                        document.getElementById('relaxCompleteModal').classList.add('active');
+                    }
+                }
+            }, 1000);
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            document.getElementById('meditationTimer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+    </script>
+</body>
+</html>

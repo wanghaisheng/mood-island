@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社交分享 - 情绪探险之旅</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            height: 100vh;
+            background: linear-gradient(to bottom, #F472B6, #EC4899);
+            color: white;
+            overflow: hidden;
+        }
+
+        .app-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .share-header {
+            position: relative;
+            padding: 20px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .share-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px;
+            overflow-y: auto;
+        }
+
+        .share-card {
+            background-color: white;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 340px;
+            padding: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #F3E8FF;
+            margin-right: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #9333EA;
+            font-size: 24px;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .card-content {
+            color: #4B5563;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            border-top: 1px solid #F3F4F6;
+            padding-top: 16px;
+        }
+
+        .platform-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #F9FAFB;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            width: 100%;
+            color: #4B5563;
+            transition: transform 0.2s;
+        }
+
+        .platform-btn:active {
+            transform: scale(0.98);
+        }
+
+        .platform-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+
+        .gem-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .gem {
+            width: 30px;
+            height: 30px;
+            position: relative;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(236, 72, 153, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.7rem;
+        }
+
+        .nav-item.active {
+            color: white;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #F472B6;
+            animation: fall linear forwards;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 分享头部 -->
+        <div class="share-header">
+            <button class="back-button" id="backButton">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            
+            <h1 class="text-xl font-bold">分享你的情绪之旅</h1>
+            
+            <div class="w-10"></div> <!-- 占位，保持标题居中 -->
+        </div>
+        
+        <!-- 分享内容 -->
+        <div class="share-content">
+            <!-- 预览卡片 -->
+            <div class="share-card">
+                <div class="card-header">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <h3 class="font-bold text-gray-900">你的名字</h3>
+                        <p class="text-xs text-gray-500">刚刚 · 情绪探险之旅</p>
+                    </div>
+                </div>
+                
+                <div class="card-content">
+                    <p class="text-sm mb-4">今天完成了情绪探险，收集了5颗宝石！我的情绪平衡指数达到了85分，心情舒畅~ 一起来体验吧！</p>
+                    
+                    <div class="bg-pink-50 rounded-xl p-4">
+                        <div class="flex items-center mb-2">
+                            <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#F472B6" stroke="#EC4899" stroke-width="1.5" />
+                            </svg>
+                            <span class="text-pink-600 text-sm font-medium">情绪探险之旅</span>
+                        </div>
+                        
+                        <div class="gem-container">
+                            <svg class="gem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#FBBF24" stroke="#D97706" stroke-width="1.5" />
+                            </svg>
+                            
+                            <svg class="gem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#93C5FD" stroke="#60A5FA" stroke-width="1.5" />
+                            </svg>
+                            
+                            <svg class="gem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#A5B4FC" stroke="#818CF8" stroke-width="1.5" />
+                            </svg>
+                            
+                            <svg class="gem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#C4B5FD" stroke="#A78BFA" stroke-width="1.5" />
+                            </svg>
+                            
+                            <svg class="gem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L5 8.5L12 21L19 8.5L12 2Z" fill="#F9A8D4" stroke="#EC4899" stroke-width="1.5" />
+                            </svg>
+                        </div>
+                        
+                        <p class="text-xs text-pink-600 text-center mt-2">点击查看我的完整情绪之旅吧！</p>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="flex gap-4">
+                        <button class="text-gray-500 text-sm flex items-center">
+                            <i class="far fa-heart mr-1"></i>
+                            <span>喜欢</span>
+                        </button>
+                        
+                        <button class="text-gray-500 text-sm flex items-center">
+                            <i class="far fa-comment mr-1"></i>
+                            <span>评论</span>
+                        </button>
+                    </div>
+                    
+                    <button class="text-gray-500 text-sm">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 分享平台 -->
+            <h2 class="text-lg font-bold mb-4 self-start ml-4">选择分享平台</h2>
+            
+            <button class="platform-btn">
+                <div class="platform-icon bg-green-100 text-green-500">
+                    <i class="fab fa-weixin"></i>
+                </div>
+                <span class="font-medium">微信好友</span>
+            </button>
+            
+            <button class="platform-btn">
+                <div class="platform-icon bg-green-100 text-green-500">
+                    <i class="fas fa-users"></i>
+                </div>
+                <span class="font-medium">微信朋友圈</span>
+            </button>
+            
+            <button class="platform-btn">
+                <div class="platform-icon bg-red-100 text-red-500">
+                    <i class="fab fa-weibo"></i>
+                </div>
+                <span class="font-medium">微博</span>
+            </button>
+            
+            <button class="platform-btn">
+                <div class="platform-icon bg-blue-100 text-blue-500">
+                    <i class="fab fa-qq"></i>
+                </div>
+                <span class="font-medium">QQ</span>
+            </button>
+            
+            <button class="platform-btn mt-4">
+                <div class="platform-icon bg-gray-100 text-gray-500">
+                    <i class="fas fa-link"></i>
+                </div>
+                <span class="font-medium">复制链接</span>
+            </button>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <div class="nav-bar">
+            <div class="nav-item">
+                <i class="fas fa-compass"></i>
+                <span>探索</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>统计</span>
+            </div>
+            <div class="nav-item">
+                <div class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center -mt-6 shadow-lg">
+                    <i class="fas fa-plus text-white text-xl"></i>
+                </div>
+            </div>
+            <div class="nav-item active">
+                <i class="fas fa-gem"></i>
+                <span>宝石</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 彩色碎屑效果 -->
+    <div id="confettiContainer"></div>
+
+    <script>
+        // 创建彩色碎屑
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confettiContainer');
+            const colors = ['#F472B6', '#EC4899', '#FBBF24', '#60A5FA', '#C4B5FD', '#A78BFA'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // 随机位置、大小、颜色和动画时间
+                const left = Math.random() * 100;
+                const size = Math.random() * 8 + 5;
+                const colorIndex = Math.floor(Math.random() * colors.length);
+                const animationDuration = Math.random() * 3 + 2;
+                const delay = Math.random() * 5;
+                
+                confetti.style.left = `${left}%`;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.backgroundColor = colors[colorIndex];
+                confetti.style.animationDuration = `${animationDuration}s`;
+                confetti.style.animationDelay = `${delay}s`;
+                
+                // 随机形状
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '50%';
+                } else {
+                    confetti.style.borderRadius = '0';
+                }
+                
+                confettiContainer.appendChild(confetti);
+            }
+        }
+        
+        // 页面加载时创建碎屑
+        createConfetti();
+        
+        // 平台按钮点击效果
+        document.querySelectorAll('.platform-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('分享功能已触发！在实际应用中，这里会调用相应的分享API。');
+            });
+        });
+        
+        // 返回按钮
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = 'summary.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.prototype-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    transition: transform 0.3s;
+}
+
+.prototype-container:hover {
+    transform: translateY(-5px);
+}
+
+.iphone-frame {
+    width: 375px;
+    height: 812px;
+    background-color: white;
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e0e0e0;
+    margin: 0 auto;
+}
+
+.iphone-status-bar {
+    height: 44px;
+    background-color: #000;
+    position: relative;
+    z-index: 10;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    padding: 0 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.iphone-status-bar:before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 148px;
+    height: 28px;
+    background-color: #000;
+    border-radius: 18px;
+}
+
+iframe {
+    width: 100%;
+    height: calc(100% - 44px);
+    border: none;
+}
+
+/* Animation for prototype containers */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.prototype-container {
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.prototype-container:nth-child(1) { animation-delay: 0.1s; }
+.prototype-container:nth-child(2) { animation-delay: 0.2s; }
+.prototype-container:nth-child(3) { animation-delay: 0.3s; }
+.prototype-container:nth-child(4) { animation-delay: 0.4s; }
+.prototype-container:nth-child(5) { animation-delay: 0.5s; }
+.prototype-container:nth-child(6) { animation-delay: 0.6s; }
+.prototype-container:nth-child(7) { animation-delay: 0.7s; }
+.prototype-container:nth-child(8) { animation-delay: 0.8s; }
+.prototype-container:nth-child(9) { animation-delay: 0.9s; }
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .iphone-frame {
+        width: 320px;
+        height: 690px;
+    }
+}
+
+@media (max-width: 768px) {
+    .iphone-frame {
+        width: 290px;
+        height: 630px;
+    }
+}
+
